@@ -19449,6 +19449,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -19512,7 +19516,7 @@
 	                _react2.default.createElement(_ProfileLine2.default, { label: "name", value: this.props.name }),
 	                _react2.default.createElement(_ProfileLine2.default, { label: "surname", value: this.props.surname }),
 	                _react2.default.createElement(_ProfileLine2.default, { label: "email", value: this.props.email }),
-	                this.state.dateTimeNow != null ? this.state.dateTimeNow : "",
+	                this.state.dateTimeNow ? this.state.dateTimeNow : "",
 	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
 	                    'button',
@@ -19526,13 +19530,17 @@
 	    return Profile;
 	}(_react2.default.Component);
 
-	module.exports = Profile;
+	exports.default = Profile;
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19577,7 +19585,7 @@
 	    return ProfileLine;
 	}(_react2.default.Component);
 
-	module.exports = ProfileLine;
+	exports.default = ProfileLine;
 
 /***/ })
 /******/ ]);

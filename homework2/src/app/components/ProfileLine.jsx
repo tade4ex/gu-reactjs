@@ -6,4 +6,4 @@ class ProfileLine extends React.Component {
     }
 }
 
-module.exports = ProfileLine;
+export default ProfileLine;
