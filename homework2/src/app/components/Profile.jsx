@@ -33,7 +33,7 @@ class Profile extends React.Component {
             <ProfileLine label={"name"} value={this.props.name}/>
             <ProfileLine label={"surname"} value={this.props.surname}/>
             <ProfileLine label={"email"} value={this.props.email}/>
-            {this.state.dateTimeNow != null ? this.state.dateTimeNow : ""}
+            {this.state.dateTimeNow ? this.state.dateTimeNow : ""}
             <br/>
             <button onClick={this.handleClickDateNow}>Show datetime now</button>
         </div>
