@@ -40,14 +40,6 @@ module.exports = {
             template: path.join(__dirname, 'src', 'index.html'),
             filename: path.join(__dirname, 'dist', 'index.html')
         }),
-        new BrowserSyncPlugin({
-            host: 'localhost',
-            port: 3000,
-            server: {
-                baseDir: ['dist']
-            }
-        }),
         new CleanWebpackPlugin(['dist']),
-
     ]
 };
