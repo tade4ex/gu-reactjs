@@ -1,9 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+// const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -28,6 +28,26 @@ module.exports = {
                     ],
                     plugins: ['react-html-attrs', 'transform-decorators-legacy']
                 }
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]"
+            },
+            {
+                test: /\.ttf$/,
+                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=./fonts/[name].[ext]"
+            },
+            {
+                test: /\.eot$/,
+                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=./fonts/[name].[ext]"
+            },
+            {
+                test: /\.svg$/,
+                loader: "url-loader?limit=10000&mimetype=application/svg+xml&name=./fonts/[name].[ext]"
             }
         ]
     },

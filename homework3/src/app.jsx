@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Profile from './app/components/Profile';
+import MainPage from './app/pages/MainPage';
 
 const app = document.getElementById('app');
-
-ReactDOM.render(
-    <Profile name={"Tadeus"} surname={"Tunkevic"} email={"tade4ex@gmail.com"}/>,
-    app);
+ReactDOM.render(<MainPage/>, app);
