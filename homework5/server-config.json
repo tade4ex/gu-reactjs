@@ -1,0 +1,12 @@
+{
+  "http": {
+    "ip": "127.0.0.1",
+    "port": 3001,
+    "pathToFrontend": "../dist"
+  },
+  "mongodb": {
+    "ip": "127.0.0.1",
+    "port": "27017",
+    "dbName": "gu2018"
+  }
+}
