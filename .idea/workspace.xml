@@ -2,45 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fa4ac14-3266-466d-b721-69bbfd297c79" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/homework5/backend/ApiGet.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/backend/ApiPost.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/backend/modules/Comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/backend/modules/Post.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/Comment.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/Comments.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/CreateComment.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/NavigationItem.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/pagePost/Post.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/pagePost/Posts.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/pagePost/ViewPost.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarCreateNewPostModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarCreateNewUserModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/userPage/User.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/components/userPage/Users.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/pages/AboutPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/pages/ContactsPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/pages/PostPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/pages/PostsPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework5/src/app/pages/UsersPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/backend/MongoDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/backend/MongoDB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/backend/Server.js" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/backend/Server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/backend/modules/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/backend/modules/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/dist/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/dist/vendors.js" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/dist/vendors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/Content.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/Content.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/Navigation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/Navigation.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/Posts.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/WelcomeModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/WelcomeModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarAuthorization.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarAuthorization.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarRegisterModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarRegisterModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/sidebar/SidebarUser.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/layouts/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/layouts/Layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework5/src/app/styles/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/styles/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,50 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Navigation.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework5/src/app/components/Navigation.jsx">
+      <file leaf-file-name="FormComponent.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NavigationItem.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework5/src/app/components/NavigationItem.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Posts.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework5/src/app/components/pagePost/Posts.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="69" column="70" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Users.jsx" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/homework5/src/app/components/userPage/Users.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="70" column="73" selection-start-line="70" selection-start-column="73" selection-end-line="70" selection-end-column="73" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="170">
+              <caret line="10" column="64" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -185,7 +108,6 @@
         <option value="$PROJECT_DIR$/homework5/src/app/components/CreateComment.jsx" />
         <option value="$PROJECT_DIR$/homework5/src/app/components/Comment.jsx" />
         <option value="$PROJECT_DIR$/homework5/backend/MongoDB.js" />
-        <option value="$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx" />
         <option value="$PROJECT_DIR$/homework5/src/app/components/pagePost/Post.jsx" />
         <option value="$PROJECT_DIR$/homework5/backend/modules/Comment.js" />
         <option value="$PROJECT_DIR$/homework5/src/app/components/pagePost/ViewPost.jsx" />
@@ -198,6 +120,7 @@
         <option value="$PROJECT_DIR$/homework5/src/app/components/NavigationItem.jsx" />
         <option value="$PROJECT_DIR$/homework5/src/app/components/pagePost/Posts.jsx" />
         <option value="$PROJECT_DIR$/homework5/src/app/components/userPage/Users.jsx" />
+        <option value="$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx" />
       </list>
     </option>
   </component>
@@ -305,6 +228,15 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="sidebar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="homework5" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="userPage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -388,12 +320,12 @@
       <workItem from="1525713783779" duration="5352000" />
       <workItem from="1525802012430" duration="11592000" />
       <workItem from="1525979193314" duration="692000" />
-      <workItem from="1526118464142" duration="42475000" />
+      <workItem from="1526118464142" duration="43096000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88480000" />
+    <option name="totallyTimeSpent" value="89101000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -404,8 +336,8 @@
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32897604" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18070363" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32897604" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18070363" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
@@ -678,13 +610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework5/src/app/components/pagePost/Post.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -849,6 +774,13 @@
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/homework5/src/app/components/FormComponent.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="64" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
         </state>
       </provider>
     </entry>

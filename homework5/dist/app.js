@@ -50205,7 +50205,7 @@
 	            var date = [d.getDate(), d.getMonth() + 1, d.getFullYear()].map(function (a) {
 	                return a < 10 ? '0' + a : a;
 	            }).join('-');
-	            var time = [d.getHours(), d.getMinutes()].map(function (a) {
+	            var time = [d.getHours(), d.getMinutes(), d.getSeconds()].map(function (a) {
 	                return a < 10 ? '0' + a : a;
 	            }).join(':');
 	            return date + ' ' + time;

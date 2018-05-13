@@ -8,7 +8,7 @@ export default class FormComponent extends Component {
     getDateTime() {
         let d = new Date();
         let date = [d.getDate(), d.getMonth()+1, d.getFullYear()].map((a) => a < 10 ? `0${a}` : a).join('-');
-        let time = [d.getHours(), d.getMinutes()].map((a) => a < 10 ? `0${a}` : a).join(':');
+        let time = [d.getHours(), d.getMinutes(), d.getSeconds()].map((a) => a < 10 ? `0${a}` : a).join(':');
         return `${date} ${time}`;
     }
 
