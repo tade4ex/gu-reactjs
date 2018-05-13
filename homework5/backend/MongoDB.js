@@ -68,7 +68,7 @@ class MongoDB {
                 });
                 break;
             case 'get-all':
-                this.collection(collectionName).find().sort({createDateTime: 1}).skip(data.skip).limit(data.limit).toArray(callback);
+                this.collection(collectionName).find().sort({createDateTime: -1}).skip(data.skip).limit(data.limit).toArray(callback);
                 break;
             case 'get':
                 this.collectionGet(collectionName, data, callback);
