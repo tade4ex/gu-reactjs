@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Posts from "./Posts";
+import Posts from "./pagePost/Posts";
 
 export default class Content extends Component {
     render() {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
+import {Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 
 export default class WelcomeModal extends Component {
     constructor(props) {

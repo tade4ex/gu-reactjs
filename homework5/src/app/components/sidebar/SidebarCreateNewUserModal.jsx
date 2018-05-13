@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
-import { browserHistory } from 'react-router';
-
 import FormComponent from "../FormComponent";
 
 export default class SidebarCreateNewUserModal extends FormComponent {
@@ -56,7 +54,7 @@ export default class SidebarCreateNewUserModal extends FormComponent {
             })
                 .then((result) => {
                     if (result.data.ok === true) {
-                        browserHistory.push(`/`);
+
                     }
                     /* todo aler bootstrap this email exists */
                     return false;
@@ -121,7 +119,7 @@ export default class SidebarCreateNewUserModal extends FormComponent {
             <div>
                 <Modal show={this.props.modalShow} onHide={this.props.handleCloseModal}>
                     <ModalHeader closeButton>
-                        <ModalTitle>Register</ModalTitle>
+                        <ModalTitle>Create new user</ModalTitle>
                     </ModalHeader>
                     <ModalBody>
                         <Form type="post">
@@ -173,7 +171,7 @@ export default class SidebarCreateNewUserModal extends FormComponent {
                                       className="help-block">{(this.state.inputRepeatPasswordError ? this.state.inputRepeatPasswordErrorMessage : '')}</span>
                             </FormGroup>
                             <Button className="btn-primary"
-                                    onClick={this.handleRegisterForm}>Register</Button>
+                                    onClick={this.handleRegisterForm}>Add</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

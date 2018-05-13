@@ -112,7 +112,7 @@ export default class SidebarAuthorization extends Component {
                                   className="help-block">{(this.state.sidebarInputEmailError ? this.state.sidebarInputEmailErrorMessage : '')}</span>
                         </FormGroup>
                         <FormGroup className={(this.state.sidebarInputPasswordError ? 'has-error' : '')}>
-
+                            <label htmlFor="sidebarInputEmail">Password:</label>
                             <input type="password" className="form-control" id="sidebarInputPassword"
                                    placeholder="Password" value={this.state.sidebarInputPasswordValue}
                                    aria-describedby="sidebarInputPasswordHelpBox"

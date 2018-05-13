@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import '../styles/App.css';
 import Header from '../components/Header';
-import Content from '../components/Content';
 import Sidebar from './Sidebar';
 import Footer from "../components/Footer";
 import WelcomeModal from "../components/WelcomeModal";
 
-export default class App extends Component {
+export default class Layout extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,7 +36,8 @@ export default class App extends Component {
                 }
 
             })
-            .then((err) => {});
+            .then((err) => {
+            });
     }
 
     handleWelcomeModalClose() {
@@ -55,12 +55,12 @@ export default class App extends Component {
         let name = cookieName + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
+        for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) === ' ') {
                 c = c.substring(1);
             }
-            if (c.indexOf(name) == 0) {
+            if (c.indexOf(name) === 0) {
                 return c.substring(name.length, c.length);
             }
         }
@@ -70,11 +70,15 @@ export default class App extends Component {
     render() {
         return (
             <div className="container">
-                <WelcomeModal modalShow={this.state.welcomeModalShow} handleWelcomeModalClose={this.handleWelcomeModalClose}/>
+                <WelcomeModal modalShow={this.state.welcomeModalShow}
+                              handleWelcomeModalClose={this.handleWelcomeModalClose}/>
                 <Header projectName="Tadeus Tunkevic Blog"/>
                 <main className="row">
-                    <Content/>
-                    <Sidebar handleGetCookie={this.handleGetCookie} user={this.state.user} authorization={this.state.authorization} handleAuthorization={this.handleAuthorization}/>
+                    <div className="col col-lg-8">
+                        {React.cloneElement(this.props.children, { user: this.state.user, authorization: this.state.authorization })}
+                    </div>
+                    <Sidebar handleGetCookie={this.handleGetCookie} user={this.state.user}
+                             authorization={this.state.authorization} handleAuthorization={this.handleAuthorization}/>
                 </main>
                 <Footer/>
             </div>
