@@ -85,7 +85,7 @@ class UsersStore extends EventEmitter {
             password: user.password,
         })
             .then((response) => {
-                if (response.data.result.ok === true) {
+                if (response.data.result.ok === 1) {
                     dispatcher.dispatch({
                         type: FETCH_USER_ADD,
                         payload: response.data.ops[0]

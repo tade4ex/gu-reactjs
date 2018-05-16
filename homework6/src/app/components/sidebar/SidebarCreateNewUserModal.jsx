@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
-
+import {browserHistory} from "react-router";
 
 import UsersStore from '../../flux/store/UsersStore';
-import {addUser, fetchUsers} from '../../flux/actions/usersActions';
+import {addUser} from '../../flux/actions/usersActions';
 import FormComponent from "../FormComponent";
 
 export default class SidebarCreateNewUserModal extends FormComponent {
@@ -12,24 +11,24 @@ export default class SidebarCreateNewUserModal extends FormComponent {
         super(props);
 
         this.state = {
-            inputNameValue: 'Test',
-            inputNameOk: !false,
+            inputNameValue: '',
+            inputNameOk: false,
             inputNameError: false,
             inputNameErrorMessage: '',
-            inputSurnameValue: 'Test',
-            inputSurnameOk: !false,
+            inputSurnameValue: '',
+            inputSurnameOk: false,
             inputSurnameError: false,
             inputSurnameErrorMessage: '',
-            inputEmailValue: 'test@test.com',
-            inputEmailOk: !false,
+            inputEmailValue: '',
+            inputEmailOk: false,
             inputEmailError: false,
             inputEmailErrorMessage: '',
-            inputPasswordValue: 'test12',
-            inputPasswordOk: !false,
+            inputPasswordValue: '',
+            inputPasswordOk: false,
             inputPasswordError: false,
             inputPasswordErrorMessage: '',
-            inputRepeatPasswordValue: 'test12',
-            inputRepeatPasswordOk: !false,
+            inputRepeatPasswordValue: '',
+            inputRepeatPasswordOk: false,
             inputRepeatPasswordError: false,
             inputRepeatPasswordErrorMessage: ''
         };
@@ -106,8 +105,10 @@ export default class SidebarCreateNewUserModal extends FormComponent {
         });
     }
 
-    onUserChangeAdd(data) {
-        console.log(data);
+    onUserChangeAdd(user) {
+        this.props.handleCloseModal();
+        this.setState(this.defaultStates);
+        browserHistory.push(`/profile/${user._id}`);
     }
 
     componentWillMount() {

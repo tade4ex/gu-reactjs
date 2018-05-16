@@ -31,7 +31,7 @@ class Post {
                 }, (err, result) => {
                     callback({
                         count: count,
-                        data: result
+                        comments: result
                     });
                 });
             } else {

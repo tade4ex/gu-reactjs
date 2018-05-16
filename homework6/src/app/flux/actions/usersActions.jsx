@@ -16,10 +16,12 @@ export function addUser(name, surname, email, password) {
 }
 
 export function getUser(userId) {
-    dispacher.dispatch({
-        type: GET_USER,
-        payload: userId
-    });
+    setTimeout(() => {
+        dispacher.dispatch({
+            type: GET_USER,
+            payload: userId
+        });
+    }, 1);
 }
 
 export function fetchUsers(page, limitPerPage) {

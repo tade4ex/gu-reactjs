@@ -60,27 +60,27 @@
 
 	var _Layout2 = _interopRequireDefault(_Layout);
 
-	var _PostsPage = __webpack_require__(414);
+	var _PostsPage = __webpack_require__(417);
 
 	var _PostsPage2 = _interopRequireDefault(_PostsPage);
 
-	var _PostPage = __webpack_require__(417);
+	var _PostPage = __webpack_require__(420);
 
 	var _PostPage2 = _interopRequireDefault(_PostPage);
 
-	var _AboutPage = __webpack_require__(422);
+	var _AboutPage = __webpack_require__(428);
 
 	var _AboutPage2 = _interopRequireDefault(_AboutPage);
 
-	var _ContactsPage = __webpack_require__(423);
+	var _ContactsPage = __webpack_require__(429);
 
 	var _ContactsPage2 = _interopRequireDefault(_ContactsPage);
 
-	var _UsersPage = __webpack_require__(424);
+	var _UsersPage = __webpack_require__(430);
 
 	var _UsersPage2 = _interopRequireDefault(_UsersPage);
 
-	var _ProfilePage = __webpack_require__(427);
+	var _ProfilePage = __webpack_require__(433);
 
 	var _ProfilePage2 = _interopRequireDefault(_ProfilePage);
 
@@ -26179,7 +26179,7 @@
 
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 
-	var _Footer = __webpack_require__(411);
+	var _Footer = __webpack_require__(414);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -50348,6 +50348,7 @@
 	        key: 'change',
 	        value: function change() {
 	            this.emit('change', this.authorization);
+	            console.log('test');
 	        }
 	    }, {
 	        key: 'handleActions',
@@ -51013,9 +51014,11 @@
 	}
 
 	function fetchAuth() {
-	    _dispatcher2.default.dispatch({
-	        type: _authConstants.FETCH_AUTH_START
-	    });
+	    setTimeout(function () {
+	        _dispatcher2.default.dispatch({
+	            type: _authConstants.FETCH_AUTH_START
+	        });
+	    }, 1);
 	}
 
 /***/ }),
@@ -51454,11 +51457,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(367);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
 	var _reactBootstrap = __webpack_require__(94);
+
+	var _reactRouter = __webpack_require__(25);
 
 	var _UsersStore = __webpack_require__(407);
 
@@ -51487,24 +51488,24 @@
 	        var _this = _possibleConstructorReturn(this, (SidebarCreateNewUserModal.__proto__ || Object.getPrototypeOf(SidebarCreateNewUserModal)).call(this, props));
 
 	        _this.state = {
-	            inputNameValue: 'Test',
-	            inputNameOk: !false,
+	            inputNameValue: '',
+	            inputNameOk: false,
 	            inputNameError: false,
 	            inputNameErrorMessage: '',
-	            inputSurnameValue: 'Test',
-	            inputSurnameOk: !false,
+	            inputSurnameValue: '',
+	            inputSurnameOk: false,
 	            inputSurnameError: false,
 	            inputSurnameErrorMessage: '',
-	            inputEmailValue: 'test@test.com',
-	            inputEmailOk: !false,
+	            inputEmailValue: '',
+	            inputEmailOk: false,
 	            inputEmailError: false,
 	            inputEmailErrorMessage: '',
-	            inputPasswordValue: 'test12',
-	            inputPasswordOk: !false,
+	            inputPasswordValue: '',
+	            inputPasswordOk: false,
 	            inputPasswordError: false,
 	            inputPasswordErrorMessage: '',
-	            inputRepeatPasswordValue: 'test12',
-	            inputRepeatPasswordOk: !false,
+	            inputRepeatPasswordValue: '',
+	            inputRepeatPasswordOk: false,
 	            inputRepeatPasswordError: false,
 	            inputRepeatPasswordErrorMessage: ''
 	        };
@@ -51584,8 +51585,10 @@
 	        }
 	    }, {
 	        key: 'onUserChangeAdd',
-	        value: function onUserChangeAdd(data) {
-	            console.log(data);
+	        value: function onUserChangeAdd(user) {
+	            this.props.handleCloseModal();
+	            this.setState(this.defaultStates);
+	            _reactRouter.browserHistory.push('/profile/' + user._id);
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -51850,7 +51853,7 @@
 	                email: user.email,
 	                password: user.password
 	            }).then(function (response) {
-	                if (response.data.result.ok === true) {
+	                if (response.data.result.ok === 1) {
 	                    _dispatcher2.default.dispatch({
 	                        type: _usersConstants.FETCH_USER_ADD,
 	                        payload: response.data.ops[0]
@@ -51999,10 +52002,12 @@
 	}
 
 	function getUser(userId) {
-	    _dispatcher2.default.dispatch({
-	        type: _usersConstants.GET_USER,
-	        payload: userId
-	    });
+	    setTimeout(function () {
+	        _dispatcher2.default.dispatch({
+	            type: _usersConstants.GET_USER,
+	            payload: userId
+	        });
+	    }, 1);
 	}
 
 	function fetchUsers(page, limitPerPage) {
@@ -52041,6 +52046,12 @@
 	var _reactBootstrap = __webpack_require__(94);
 
 	var _reactRouter = __webpack_require__(25);
+
+	var _PostsStore = __webpack_require__(411);
+
+	var _PostsStore2 = _interopRequireDefault(_PostsStore);
+
+	var _postsActions = __webpack_require__(413);
 
 	var _FormComponent2 = __webpack_require__(393);
 
@@ -52083,37 +52094,22 @@
 	        _this.inputTitleChange = _this.inputTitleChange.bind(_this);
 	        _this.inputShortTextChange = _this.inputShortTextChange.bind(_this);
 	        _this.inputLongTextChange = _this.inputLongTextChange.bind(_this);
+	        _this.onPostAdd = _this.onPostAdd.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(SidebarCreateNewPostModal, [{
 	        key: 'handleSendForm',
 	        value: function handleSendForm() {
-	            var _this2 = this;
-
 	            if (this.state.inputTitleOk && this.state.inputShortTextOk && this.state.inputLongTextOk) {
-	                _axios2.default.post('/api/post-add', {
-	                    createDateTime: this.getDateTime(),
-	                    img: null,
-	                    post: {
-	                        title: this.state.inputTitleValue,
-	                        shortText: this.state.inputShortTextValue,
-	                        longText: this.state.inputLongTextValue
-	                    },
-	                    author: {
-	                        title: this.props.user.name + ' ' + this.props.user.surname,
-	                        _id: this.props.user._id
-	                    },
-	                    commentsCount: 0
-	                }).then(function (result) {
-	                    if (result.data.result.ok === 1) {
-	                        _this2.props.handleCloseModal();
-	                        _this2.setState(_this2.defaultStates);
-	                        _reactRouter.browserHistory.push('/post/' + result.data.ops[0]._id);
-	                    }
-	                    /* todo alert error ... */
-	                    return false;
-	                }).then(function (err) {});
+	                (0, _postsActions.addPost)(this.getDateTime(), null, {
+	                    title: this.state.inputTitleValue,
+	                    shortText: this.state.inputShortTextValue,
+	                    longText: this.state.inputLongTextValue
+	                }, {
+	                    title: this.props.user.name + ' ' + this.props.user.surname,
+	                    _id: this.props.user._id
+	                }, 0);
 	            }
 	            return false;
 	        }
@@ -52146,6 +52142,23 @@
 	                    errorMessage: 'Name must min 30 symbols!'
 	                }
 	            });
+	        }
+	    }, {
+	        key: 'onPostAdd',
+	        value: function onPostAdd(post) {
+	            this.props.handleCloseModal();
+	            this.setState(this.defaultStates);
+	            _reactRouter.browserHistory.push('/post/' + post._id);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            _PostsStore2.default.on('change-add', this.onPostAdd);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _PostsStore2.default.removeListener('change-add', this.onPostAdd);
 	        }
 	    }, {
 	        key: 'render',
@@ -52259,6 +52272,292 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _events = __webpack_require__(395);
+
+	var _postsConstatns = __webpack_require__(412);
+
+	var _dispatcher = __webpack_require__(397);
+
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+
+	var _axios = __webpack_require__(367);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PostsStore = function (_EventEmitter) {
+	    _inherits(PostsStore, _EventEmitter);
+
+	    function PostsStore() {
+	        _classCallCheck(this, PostsStore);
+
+	        var _this = _possibleConstructorReturn(this, (PostsStore.__proto__ || Object.getPrototypeOf(PostsStore)).apply(this, arguments));
+
+	        _this.data = {
+	            posts: [],
+	            lastPage: 0
+	        };
+
+	        _this.post = {
+	            get: null,
+	            add: null,
+	            update: null,
+	            remove: null
+	        };
+
+	        _this.fetchPostsStart = _this.fetchPostsStart.bind(_this);
+	        _this.fetchPostsEnd = _this.fetchPostsEnd.bind(_this);
+	        _this.addPost = _this.addPost.bind(_this);
+	        _this.getPost = _this.getPost.bind(_this);
+	        _this.fetchPostAdd = _this.fetchPostAdd.bind(_this);
+	        _this.fetchPostGet = _this.fetchPostGet.bind(_this);
+
+	        _this.change = _this.change.bind(_this);
+	        _this.changeGet = _this.changeGet.bind(_this);
+	        _this.changeAdd = _this.changeAdd.bind(_this);
+	        _this.changeUpdate = _this.changeUpdate.bind(_this);
+	        _this.changeRemove = _this.changeRemove.bind(_this);
+	        _this.handleActions = _this.handleActions.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(PostsStore, [{
+	        key: 'fetchPostsStart',
+	        value: function fetchPostsStart(params) {
+	            var data = {
+	                posts: [],
+	                lastPage: 0,
+	                page: 1
+	            };
+	            _axios2.default.post('/api/posts-all', {
+	                page: params.page,
+	                limit: params.limitPerPage
+	            }).then(function (response) {
+	                if (response.data.posts != null) {
+	                    data = response.data;
+	                }
+	                _dispatcher2.default.dispatch({
+	                    type: _postsConstatns.FETCH_POSTS_END,
+	                    payload: data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'fetchPostsEnd',
+	        value: function fetchPostsEnd(data) {
+	            this.data = data;
+	            this.change();
+	        }
+	    }, {
+	        key: 'getPost',
+	        value: function getPost(postId) {
+	            _axios2.default.get('/api/post/' + postId).then(function (response) {
+	                _dispatcher2.default.dispatch({
+	                    type: _postsConstatns.FETCH_POST_GET,
+	                    payload: response.data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'addPost',
+	        value: function addPost(post) {
+	            _axios2.default.post('/api/post-add', {
+	                createDateTime: post.createDateTime,
+	                img: post.img,
+	                post: post.post,
+	                author: post.author,
+	                commentsCount: post.commentsCount
+	            }).then(function (response) {
+	                console.log(response);
+	                if (response.data.result.ok === 1) {
+	                    _dispatcher2.default.dispatch({
+	                        type: _postsConstatns.FETCH_POST_ADD,
+	                        payload: response.data.ops[0]
+	                    });
+	                }
+	                /* todo aler bootstrap this email exists */
+	                return false;
+	            });
+	        }
+	    }, {
+	        key: 'fetchPostAdd',
+	        value: function fetchPostAdd(post) {
+	            this.post.add = post;
+	            this.changeAdd();
+	        }
+	    }, {
+	        key: 'fetchPostGet',
+	        value: function fetchPostGet(post) {
+	            this.post.get = post;
+	            this.changeGet();
+	        }
+	    }, {
+	        key: 'change',
+	        value: function change() {
+	            this.emit('change', this.data);
+	        }
+	    }, {
+	        key: 'changeGet',
+	        value: function changeGet() {
+	            this.emit('change-get', this.post.get);
+	        }
+	    }, {
+	        key: 'changeAdd',
+	        value: function changeAdd() {
+	            this.emit('change-add', this.post.add);
+	        }
+	    }, {
+	        key: 'changeUpdate',
+	        value: function changeUpdate() {
+	            this.emit('change-update', this.post.update);
+	        }
+	    }, {
+	        key: 'changeRemove',
+	        value: function changeRemove() {
+	            this.emit('change-remove', this.post.remove);
+	        }
+	    }, {
+	        key: 'handleActions',
+	        value: function handleActions(action) {
+	            switch (action.type) {
+	                case _postsConstatns.FETCH_POSTS_START:
+	                    {
+	                        this.fetchPostsStart(action.payload);
+	                        break;
+	                    }
+	                case _postsConstatns.FETCH_POSTS_END:
+	                    {
+	                        this.fetchPostsEnd(action.payload);
+	                        break;
+	                    }
+	                case _postsConstatns.ADD_POST:
+	                    {
+	                        this.addPost(action.payload);
+	                        break;
+	                    }
+	                case _postsConstatns.FETCH_POST_ADD:
+	                    {
+	                        this.fetchPostAdd(action.payload);
+	                        break;
+	                    }
+	                case _postsConstatns.GET_POST:
+	                    {
+	                        this.getPost(action.payload);
+	                        break;
+	                    }
+	                case _postsConstatns.FETCH_POST_GET:
+	                    {
+	                        this.fetchPostGet(action.payload);
+	                        break;
+	                    }
+	            }
+	        }
+	    }]);
+
+	    return PostsStore;
+	}(_events.EventEmitter);
+
+	var postStore = new PostsStore();
+	_dispatcher2.default.register(postStore.handleActions);
+	exports.default = postStore;
+
+/***/ }),
+/* 412 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var GET_POST = exports.GET_POST = 'GET_POST';
+	var ADD_POST = exports.ADD_POST = 'ADD_POST';
+	var UPDATE_POST = exports.UPDATE_POST = 'UPDATE_POST';
+	var REMOVE_POST = exports.REMOVE_POST = 'REMOVE_POST';
+	var FETCH_POST_GET = exports.FETCH_POST_GET = 'FETCH_POST_GET';
+	var FETCH_POST_ADD = exports.FETCH_POST_ADD = 'FETCH_POST_ADD';
+	var FETCH_POST_UPDATE = exports.FETCH_POST_UPDATE = 'FETCH_POST_UPDATE';
+	var FETCH_POST_REMOVE = exports.FETCH_POST_REMOVE = 'FETCH_POST_REMOVE';
+
+	var FETCH_POSTS_START = exports.FETCH_POSTS_START = 'FETCH_POSTS_START';
+	var FETCH_POSTS_END = exports.FETCH_POSTS_END = 'FETCH_POSTS_END';
+
+/***/ }),
+/* 413 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.addPost = addPost;
+	exports.getPost = getPost;
+	exports.fetchPosts = fetchPosts;
+
+	var _dispatcher = __webpack_require__(397);
+
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+
+	var _postsConstatns = __webpack_require__(412);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function addPost(createDateTime, img, post, author, commentsCount) {
+	    var _post = {
+	        createDateTime: createDateTime,
+	        img: img,
+	        post: post,
+	        author: author,
+	        commentsCount: commentsCount
+	    };
+
+	    _dispatcher2.default.dispatch({
+	        type: _postsConstatns.ADD_POST,
+	        payload: _post
+	    });
+	}
+
+	function getPost(postId) {
+	    setTimeout(function () {
+	        _dispatcher2.default.dispatch({
+	            type: _postsConstatns.GET_POST,
+	            payload: postId
+	        });
+	    }, 1);
+	}
+
+	function fetchPosts(page, limitPerPage) {
+	    var params = {
+	        page: page,
+	        limitPerPage: limitPerPage
+	    };
+
+	    _dispatcher2.default.dispatch({
+	        type: _postsConstatns.FETCH_POSTS_START,
+	        payload: params
+	    });
+	}
+
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -52267,7 +52566,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(412);
+	__webpack_require__(415);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52310,13 +52609,13 @@
 	exports.default = Footer;
 
 /***/ }),
-/* 412 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(413);
+	var content = __webpack_require__(416);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(89)(content, {});
@@ -52336,7 +52635,7 @@
 	}
 
 /***/ }),
-/* 413 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(88)();
@@ -52350,7 +52649,7 @@
 
 
 /***/ }),
-/* 414 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52366,7 +52665,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Posts = __webpack_require__(415);
+	var _Posts = __webpack_require__(418);
 
 	var _Posts2 = _interopRequireDefault(_Posts);
 
@@ -52412,7 +52711,7 @@
 	exports.default = PostsPage;
 
 /***/ }),
-/* 415 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52430,15 +52729,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(367);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _Post = __webpack_require__(416);
+	var _Post = __webpack_require__(419);
 
 	var _Post2 = _interopRequireDefault(_Post);
 
 	var _reactRouter = __webpack_require__(25);
+
+	var _PostsStore = __webpack_require__(411);
+
+	var _PostsStore2 = _interopRequireDefault(_PostsStore);
+
+	var _postsActions = __webpack_require__(413);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52462,43 +52763,42 @@
 	            posts: [],
 	            lastPage: 0
 	        };
+
 	        _this.page = parseInt(_this.props.page);
 	        _this.limitPerPage = 5;
+
+	        _this.onPostsChange = _this.onPostsChange.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Posts, [{
-	        key: 'getPosts',
-	        value: function getPosts() {
-	            var _this2 = this;
-
-	            _axios2.default.post('/api/posts-all', {
-	                page: this.page,
-	                limit: this.limitPerPage
-	            }).then(function (res) {
-	                if (res.data.data == null) {
-	                    _this2.setState({
-	                        posts: [],
-	                        lastPage: 0
-	                    });
-	                    return false;
-	                }
-	                _this2.setState({
-	                    posts: res.data.data,
-	                    lastPage: res.data.lastPage
-	                });
-	            }).then(function (err) {});
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.page = parseInt(nextProps.page);
+	            (0, _postsActions.fetchPosts)(this.page, this.limitPerPage);
+	        }
+	    }, {
+	        key: 'onPostsChange',
+	        value: function onPostsChange(data) {
+	            this.setState({
+	                posts: data.posts,
+	                lastPage: data.lastPage
+	            });
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            _PostsStore2.default.on('change', this.onPostsChange);
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            this.getPosts();
+	            (0, _postsActions.fetchPosts)(this.page, this.limitPerPage);
 	        }
 	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.page = parseInt(nextProps.page);
-	            this.getPosts();
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _PostsStore2.default.removeListener('change', this.onPostsChange);
 	        }
 	    }, {
 	        key: 'render',
@@ -52564,7 +52864,7 @@
 	exports.default = Posts;
 
 /***/ }),
-/* 416 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52623,7 +52923,7 @@
 	                        'h4',
 	                        { className: 'media-heading' },
 	                        this.props.post.title,
-	                        ' ',
+	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'span',
 	                            { className: 'label label-default' },
@@ -52645,8 +52945,8 @@
 	                        ),
 	                        ' ',
 	                        _react2.default.createElement(
-	                            'a',
-	                            null,
+	                            _reactRouter.Link,
+	                            { to: '/profile/' + this.props.author._id },
 	                            this.props.author.title
 	                        )
 	                    ),
@@ -52679,7 +52979,7 @@
 	exports.default = Post;
 
 /***/ }),
-/* 417 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -52691,21 +52991,21 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ViewPost = __webpack_require__(418);
+	var _ViewPost = __webpack_require__(421);
 
 	var _ViewPost2 = _interopRequireDefault(_ViewPost);
 
-	var _axios = __webpack_require__(367);
+	var _PostsStore = __webpack_require__(411);
 
-	var _axios2 = _interopRequireDefault(_axios);
+	var _PostsStore2 = _interopRequireDefault(_PostsStore);
+
+	var _postsActions = __webpack_require__(413);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52723,48 +53023,51 @@
 
 	        var _this = _possibleConstructorReturn(this, (PostsPage.__proto__ || Object.getPrototypeOf(PostsPage)).call(this, props));
 
+	        _this.postId = _this.props.params.id;
+
 	        _this.state = {
-	            post: undefined
+	            post: null
 	        };
+
+	        _this.onPostGet = _this.onPostGet.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(PostsPage, [{
-	        key: "getPost",
-	        value: function getPost(postId) {
-	            var _this2 = this;
-
-	            console.log('postId', postId);
-	            _axios2.default.get("/api/post/" + postId).then(function (res) {
-	                if (res.data == null) {
-	                    _this2.setState({
-	                        post: undefined
-	                    });
-	                    return false;
-	                }
-	                _this2.setState({
-	                    post: res.data
-	                });
-	            }).then(function (err) {});
+	        key: "onPostGet",
+	        value: function onPostGet(post) {
+	            this.setState({
+	                post: post
+	            });
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            _PostsStore2.default.on('change-get', this.onPostGet);
 	        }
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            this.getPost(this.props.params.id);
+	            (0, _postsActions.getPost)(this.postId);
 	        }
 	    }, {
 	        key: "componentWillReceiveProps",
 	        value: function componentWillReceiveProps(nextProps) {
-	            this.getPost(nextProps.params.id);
+	            this.postId = nextProps.params.id;
+	            (0, _postsActions.getPost)(this.postId);
+	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            _PostsStore2.default.removeListener('change-get', this.onPostGet);
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var post = _typeof(this.state.post) === "object" ? _react2.default.createElement(_ViewPost2.default, _extends({}, this.state.post, { user: this.props.user, authorization: this.props.authorization })) : '';
 	            return _react2.default.createElement(
 	                "div",
 	                null,
-	                post
+	                this.state.post && _react2.default.createElement(_ViewPost2.default, _extends({}, this.state.post, { user: this.props.user, authorization: this.props.authorization }))
 	            );
 	        }
 	    }]);
@@ -52775,7 +53078,7 @@
 	exports.default = PostsPage;
 
 /***/ }),
-/* 418 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52793,7 +53096,9 @@
 
 	var _reactBootstrap = __webpack_require__(94);
 
-	var _Comments = __webpack_require__(419);
+	var _reactRouter = __webpack_require__(25);
+
+	var _Comments = __webpack_require__(422);
 
 	var _Comments2 = _interopRequireDefault(_Comments);
 
@@ -52848,7 +53153,7 @@
 	                        'h4',
 	                        { className: 'media-heading' },
 	                        this.props.post.title,
-	                        ' ',
+	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
 	                            'span',
 	                            { className: 'label label-default' },
@@ -52870,8 +53175,8 @@
 	                        ),
 	                        ' ',
 	                        _react2.default.createElement(
-	                            'a',
-	                            null,
+	                            _reactRouter.Link,
+	                            { to: '/profile/' + this.props.author._id },
 	                            this.props.author.title
 	                        )
 	                    ),
@@ -52899,10 +53204,10 @@
 	exports.default = ViewPost;
 
 /***/ }),
-/* 419 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -52917,17 +53222,33 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(367);
+	var _CommentsStore = __webpack_require__(423);
 
-	var _axios2 = _interopRequireDefault(_axios);
+	var _CommentsStore2 = _interopRequireDefault(_CommentsStore);
 
-	var _Comment = __webpack_require__(420);
+	var _commentsAction = __webpack_require__(425);
+
+	var _AuthStore = __webpack_require__(394);
+
+	var _AuthStore2 = _interopRequireDefault(_AuthStore);
+
+	var _authActions = __webpack_require__(400);
+
+	var _AuthUserStore = __webpack_require__(403);
+
+	var _AuthUserStore2 = _interopRequireDefault(_AuthUserStore);
+
+	var _authUserActions = __webpack_require__(405);
+
+	var _Comment = __webpack_require__(426);
 
 	var _Comment2 = _interopRequireDefault(_Comment);
 
-	var _CreateComment = __webpack_require__(421);
+	var _CreateComment = __webpack_require__(427);
 
 	var _CreateComment2 = _interopRequireDefault(_CreateComment);
+
+	var _postsActions = __webpack_require__(413);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52946,48 +53267,83 @@
 	        var _this = _possibleConstructorReturn(this, (Comments.__proto__ || Object.getPrototypeOf(Comments)).call(this, props));
 
 	        _this.state = {
-	            comments: []
+	            comments: null,
+	            count: 0,
+	            authorization: false,
+	            user: null
 	        };
+
+	        _this.onComments = _this.onComments.bind(_this);
+	        _this.onCommentAdd = _this.onCommentAdd.bind(_this);
+	        _this.onAuth = _this.onAuth.bind(_this);
+	        _this.onAuthUser = _this.onAuthUser.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Comments, [{
-	        key: 'getComments',
-	        value: function getComments() {
-	            var _this2 = this;
-
-	            _axios2.default.post('/api/comments-all', {
-	                postId: this.props.postId
-	            }).then(function (result) {
-	                _this2.setState({
-	                    comments: result.data.data
-	                });
-	            }).then(function (err) {});
+	        key: "onComments",
+	        value: function onComments(comments) {
+	            this.setState({
+	                comments: comments.comments,
+	                count: comments.count
+	            });
 	        }
 	    }, {
-	        key: 'componentDidMount',
+	        key: "onAuth",
+	        value: function onAuth(authorization) {
+	            this.setState({
+	                authorization: authorization
+	            });
+	        }
+	    }, {
+	        key: "onAuthUser",
+	        value: function onAuthUser(user) {
+	            this.setState({
+	                user: user
+	            });
+	        }
+	    }, {
+	        key: "onCommentAdd",
+	        value: function onCommentAdd() {
+	            (0, _commentsAction.fetchComments)(this.props.postId);
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            _CommentsStore2.default.on('change', this.onComments);
+	            _CommentsStore2.default.on('change-add', this.onCommentAdd);
+	            _AuthStore2.default.on('change', this.onAuth);
+	            _AuthUserStore2.default.on('change', this.onAuthUser);
+	        }
+	    }, {
+	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            this.getComments();
+	            (0, _commentsAction.fetchComments)(this.props.postId);
+	            (0, _authActions.fetchAuth)();
+	            (0, _authUserActions.fetchAuthUser)();
 	        }
 	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps() {
-	            this.getComments();
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            _CommentsStore2.default.removeListener('change', this.onComments);
+	            _CommentsStore2.default.removeListener('change-add', this.onCommentAdd);
+	            _AuthStore2.default.removeListener('change', this.onAuth);
+	            _AuthUserStore2.default.removeListener('change', this.onAuthUser);
 	        }
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
-	            var comments = this.state.comments.map(function (comment) {
+	            var comments = this.state.comments && this.state.comments.map(function (comment) {
 	                return _react2.default.createElement(_Comment2.default, _extends({}, comment, { key: comment._id }));
 	            });
 	            return _react2.default.createElement(
-	                'div',
+	                "div",
 	                null,
-	                this.props.authorization === true ? _react2.default.createElement(
-	                    'div',
+	                this.state.authorization === true ? _react2.default.createElement(
+	                    "div",
 	                    null,
-	                    _react2.default.createElement(_CreateComment2.default, { user: this.props.user, postId: this.props.postId }),
-	                    _react2.default.createElement('br', null)
+	                    _react2.default.createElement(_CreateComment2.default, { user: this.state.user, postId: this.props.postId }),
+	                    _react2.default.createElement("br", null)
 	                ) : '',
 	                comments
 	            );
@@ -53000,7 +53356,238 @@
 	exports.default = Comments;
 
 /***/ }),
-/* 420 */
+/* 423 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _events = __webpack_require__(395);
+
+	var _commentsConstants = __webpack_require__(424);
+
+	var _dispatcher = __webpack_require__(397);
+
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+
+	var _axios = __webpack_require__(367);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CommentsStore = function (_EventEmitter) {
+	    _inherits(CommentsStore, _EventEmitter);
+
+	    function CommentsStore() {
+	        _classCallCheck(this, CommentsStore);
+
+	        var _this = _possibleConstructorReturn(this, (CommentsStore.__proto__ || Object.getPrototypeOf(CommentsStore)).apply(this, arguments));
+
+	        _this.data = {
+	            comments: []
+	        };
+
+	        _this.comment = {
+	            get: null,
+	            add: null,
+	            update: null,
+	            remove: null
+	        };
+
+	        _this.fetchCommentsStart = _this.fetchCommentsStart.bind(_this);
+	        _this.fetchCommentsEnd = _this.fetchCommentsEnd.bind(_this);
+	        _this.addComment = _this.addComment.bind(_this);
+	        _this.fetchCommentAdd = _this.fetchCommentAdd.bind(_this);
+
+	        _this.change = _this.change.bind(_this);
+	        _this.changeGet = _this.changeGet.bind(_this);
+	        _this.changeAdd = _this.changeAdd.bind(_this);
+	        _this.changeUpdate = _this.changeUpdate.bind(_this);
+	        _this.changeRemove = _this.changeRemove.bind(_this);
+	        _this.handleActions = _this.handleActions.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(CommentsStore, [{
+	        key: 'fetchCommentsStart',
+	        value: function fetchCommentsStart(postId) {
+	            var data = null;
+	            _axios2.default.post('/api/comments-all', {
+	                postId: postId
+	            }).then(function (response) {
+	                if (response.data.comments != null) {
+	                    data = response.data;
+	                }
+	                _dispatcher2.default.dispatch({
+	                    type: _commentsConstants.FETCH_COMMENTS_END,
+	                    payload: data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'fetchCommentsEnd',
+	        value: function fetchCommentsEnd(data) {
+	            this.data = data;
+	            this.change();
+	        }
+	    }, {
+	        key: 'addComment',
+	        value: function addComment(comment) {
+	            _axios2.default.post('/api/comment-add', comment).then(function (response) {
+	                if (response.data.result.ok === 1) {
+	                    _dispatcher2.default.dispatch({
+	                        type: _commentsConstants.FETCH_COMMENT_ADD,
+	                        payload: response.data.ops[0]
+	                    });
+	                }
+	                return false;
+	            }).then(function (err) {});
+	        }
+	    }, {
+	        key: 'fetchCommentAdd',
+	        value: function fetchCommentAdd(comment) {
+	            this.comment.add = comment;
+	            this.changeAdd();
+	        }
+	    }, {
+	        key: 'change',
+	        value: function change() {
+	            this.emit('change', this.data);
+	        }
+	    }, {
+	        key: 'changeGet',
+	        value: function changeGet() {
+	            this.emit('change-get', this.comment.get);
+	        }
+	    }, {
+	        key: 'changeAdd',
+	        value: function changeAdd() {
+	            this.emit('change-add', this.comment.add);
+	        }
+	    }, {
+	        key: 'changeUpdate',
+	        value: function changeUpdate() {
+	            this.emit('change-update', this.comment.update);
+	        }
+	    }, {
+	        key: 'changeRemove',
+	        value: function changeRemove() {
+	            this.emit('change-remove', this.comment.remove);
+	        }
+	    }, {
+	        key: 'handleActions',
+	        value: function handleActions(action) {
+	            switch (action.type) {
+	                case _commentsConstants.FETCH_COMMENTS_START:
+	                    {
+	                        this.fetchCommentsStart(action.payload);
+	                        break;
+	                    }
+	                case _commentsConstants.FETCH_COMMENTS_END:
+	                    {
+	                        this.fetchCommentsEnd(action.payload);
+	                        break;
+	                    }
+	                case _commentsConstants.ADD_COMMENT:
+	                    {
+	                        this.addComment(action.payload);
+	                        break;
+	                    }
+	                case _commentsConstants.FETCH_COMMENT_ADD:
+	                    {
+	                        this.fetchCommentAdd(action.payload);
+	                        break;
+	                    }
+	            }
+	        }
+	    }]);
+
+	    return CommentsStore;
+	}(_events.EventEmitter);
+
+	var commentStore = new CommentsStore();
+	_dispatcher2.default.register(commentStore.handleActions);
+	exports.default = commentStore;
+
+/***/ }),
+/* 424 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var GET_COMMENT = exports.GET_COMMENT = 'GET_COMMENT';
+	var ADD_COMMENT = exports.ADD_COMMENT = 'ADD_COMMENT';
+	var UPDATE_COMMENT = exports.UPDATE_COMMENT = 'UPDATE_COMMENT';
+	var REMOVE_COMMENT = exports.REMOVE_COMMENT = 'REMOVE_COMMENT';
+	var FETCH_COMMENT_GET = exports.FETCH_COMMENT_GET = 'FETCH_COMMENT_GET';
+	var FETCH_COMMENT_ADD = exports.FETCH_COMMENT_ADD = 'FETCH_COMMENT_ADD';
+	var FETCH_COMMENT_UPDATE = exports.FETCH_COMMENT_UPDATE = 'FETCH_COMMENT_UPDATE';
+	var FETCH_COMMENT_REMOVE = exports.FETCH_COMMENT_REMOVE = 'FETCH_COMMENT_REMOVE';
+
+	var FETCH_COMMENTS_START = exports.FETCH_COMMENTS_START = 'FETCH_COMMENTS_START';
+	var FETCH_COMMENTS_END = exports.FETCH_COMMENTS_END = 'FETCH_COMMENTS_END';
+
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.addComment = addComment;
+	exports.fetchComments = fetchComments;
+
+	var _dispatcher = __webpack_require__(397);
+
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+
+	var _commentsConstants = __webpack_require__(424);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function addComment(userId, postId, userTitle, comment, createDateTime) {
+	    var _comment = {
+	        userId: userId,
+	        postId: postId,
+	        userTitle: userTitle,
+	        comment: comment,
+	        createDateTime: createDateTime
+	    };
+
+	    _dispatcher2.default.dispatch({
+	        type: _commentsConstants.ADD_COMMENT,
+	        payload: _comment
+	    });
+	}
+
+	function fetchComments(postId) {
+	    setTimeout(function () {
+	        _dispatcher2.default.dispatch({
+	            type: _commentsConstants.FETCH_COMMENTS_START,
+	            payload: postId
+	        });
+	    }, 1);
+	}
+
+/***/ }),
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53067,7 +53654,7 @@
 	exports.default = Comment;
 
 /***/ }),
-/* 421 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53094,6 +53681,24 @@
 	var _FormComponent2 = __webpack_require__(393);
 
 	var _FormComponent3 = _interopRequireDefault(_FormComponent2);
+
+	var _commentsAction = __webpack_require__(425);
+
+	var _AuthUserStore = __webpack_require__(403);
+
+	var _AuthUserStore2 = _interopRequireDefault(_AuthUserStore);
+
+	var _authActions = __webpack_require__(400);
+
+	var _CommentsStore = __webpack_require__(423);
+
+	var _CommentsStore2 = _interopRequireDefault(_CommentsStore);
+
+	var _AuthStore = __webpack_require__(394);
+
+	var _AuthStore2 = _interopRequireDefault(_AuthStore);
+
+	var _authUserActions = __webpack_require__(405);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53122,29 +53727,15 @@
 
 	        _this.handleSendForm = _this.handleSendForm.bind(_this);
 	        _this.inputCommentChange = _this.inputCommentChange.bind(_this);
+	        _this.onCommentAdd = _this.onCommentAdd.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(CreateComment, [{
 	        key: 'handleSendForm',
 	        value: function handleSendForm() {
-	            var _this2 = this;
-
 	            if (this.state.inputCommentOk) {
-	                _axios2.default.post('/api/comment-add', {
-	                    userId: this.props.user._id,
-	                    postId: this.props.postId,
-	                    userTitle: this.props.user.name + ' ' + this.props.user.surname,
-	                    comment: this.state.inputCommentValue,
-	                    createDateTime: this.getDateTime()
-	                }).then(function (result) {
-	                    if (result.data.result.ok === 1) {
-	                        _this2.setState(_this2.defaultStates);
-	                        _reactRouter.browserHistory.push('/post/' + _this2.props.postId);
-	                    }
-	                    /* todo alert error ... */
-	                    return false;
-	                }).then(function (err) {});
+	                (0, _commentsAction.addComment)(this.props.user._id, this.props.postId, this.props.user.name + ' ' + this.props.user.surname, this.state.inputCommentValue, this.getDateTime());
 	            }
 	        }
 	    }, {
@@ -53152,10 +53743,26 @@
 	        value: function inputCommentChange(e) {
 	            this.checkInput(e, 'inputComment', {
 	                len: {
-	                    len: 10,
-	                    errorMessage: 'Name must min 10 symbols!'
+	                    len: 2,
+	                    errorMessage: 'Name must min 2 symbols!'
 	                }
 	            });
+	        }
+	    }, {
+	        key: 'onCommentAdd',
+	        value: function onCommentAdd() {
+	            this.setState(this.defaultStates);
+	            _reactRouter.browserHistory.push('/post/' + this.props.postId);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            _CommentsStore2.default.on('change-add', this.onCommentAdd);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _CommentsStore2.default.removeListener('change-add', this.onCommentAdd);
 	        }
 	    }, {
 	        key: 'render',
@@ -53199,7 +53806,7 @@
 	exports.default = CreateComment;
 
 /***/ }),
-/* 422 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53273,7 +53880,7 @@
 	exports.default = AboutPage;
 
 /***/ }),
-/* 423 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53346,7 +53953,7 @@
 	exports.default = ContactsPage;
 
 /***/ }),
-/* 424 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -53362,7 +53969,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Users = __webpack_require__(425);
+	var _Users = __webpack_require__(431);
 
 	var _Users2 = _interopRequireDefault(_Users);
 
@@ -53408,7 +54015,7 @@
 	exports.default = UsersPage;
 
 /***/ }),
-/* 425 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53430,7 +54037,7 @@
 
 	var _reactBootstrap = __webpack_require__(94);
 
-	var _User = __webpack_require__(426);
+	var _User = __webpack_require__(432);
 
 	var _User2 = _interopRequireDefault(_User);
 
@@ -53596,7 +54203,7 @@
 	exports.default = Users;
 
 /***/ }),
-/* 426 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53676,7 +54283,7 @@
 	exports.default = User;
 
 /***/ }),
-/* 427 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";

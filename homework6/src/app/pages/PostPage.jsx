@@ -1,46 +1,50 @@
 import React, {Component} from 'react';
+
 import ViewPost from "../components/pagePost/ViewPost";
-import axios from "axios";
+import PostsStore from "../flux/store/PostsStore";
+import {getPost} from "../flux/actions/postsActions";
 
 export default class PostsPage extends Component {
     constructor(props) {
         super(props);
+
+        this.postId = this.props.params.id;
+
         this.state = {
-            post: undefined
+            post: null
         };
+
+        this.onPostGet = this.onPostGet.bind(this);
     }
 
-    getPost(postId) {
-        console.log('postId', postId);
-        axios.get(`/api/post/${postId}`)
-            .then((res) => {
-                if (res.data == null) {
-                    this.setState({
-                        post: undefined,
-                    });
-                    return false;
-                }
-                this.setState({
-                    post: res.data
-                });
-            })
-            .then((err) => {
-            });
+    onPostGet(post) {
+        this.setState({
+            post
+        });
+    }
+
+    componentWillMount() {
+        PostsStore.on('change-get', this.onPostGet);
     }
 
     componentDidMount() {
-        this.getPost(this.props.params.id);
+        getPost(this.postId);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.getPost(nextProps.params.id);
+        this.postId = nextProps.params.id;
+        getPost(this.postId);
+    }
+
+    componentWillUnmount() {
+        PostsStore.removeListener('change-get', this.onPostGet);
     }
 
     render() {
-        let post = typeof this.state.post === "object" ? <ViewPost {...this.state.post} user={this.props.user} authorization={this.props.authorization}/> : '';
         return (
             <div>
-                {post}
+                {this.state.post &&
+                <ViewPost {...this.state.post} user={this.props.user} authorization={this.props.authorization}/>}
             </div>
         );
     }

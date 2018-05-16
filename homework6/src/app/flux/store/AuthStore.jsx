@@ -52,6 +52,7 @@ class AuthStore extends EventEmitter {
 
     change() {
         this.emit('change', this.authorization);
+        console.log('test');
     }
 
     handleActions(action) {

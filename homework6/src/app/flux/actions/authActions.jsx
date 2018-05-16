@@ -20,7 +20,9 @@ export function logout() {
 }
 
 export function fetchAuth() {
-    dispacher.dispatch({
-        type: FETCH_AUTH_START
-    });
+    setTimeout(() => {
+        dispacher.dispatch({
+            type: FETCH_AUTH_START
+        });
+    }, 1);
 }

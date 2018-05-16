@@ -27,14 +27,14 @@ class Post {
                     callback({
                         page: 1,
                         lastPage: Math.ceil(count / limit),
-                        data: result
+                        posts: result
                     });
                 });
             } else {
                 callback({
                     page: 1,
                     lastPage: 1,
-                    data: []
+                    posts: []
                 });
             }
         });

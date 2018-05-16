@@ -4,6 +4,12 @@ import {Form, FormGroup, Button} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
 import FormComponent from "./FormComponent";
+import {addComment, fetchComments} from "../flux/actions/commentsAction";
+import AuthUserStore from "../flux/store/AuthUserStore";
+import {fetchAuth} from "../flux/actions/authActions";
+import CommentsStore from "../flux/store/CommentsStore";
+import AuthStore from "../flux/store/AuthStore";
+import {fetchAuthUser} from "../flux/actions/authUserActions";
 
 export default class CreateComment extends FormComponent {
     constructor(props) {
@@ -19,34 +25,35 @@ export default class CreateComment extends FormComponent {
 
         this.handleSendForm = this.handleSendForm.bind(this);
         this.inputCommentChange = this.inputCommentChange.bind(this);
+        this.onCommentAdd = this.onCommentAdd.bind(this);
     }
 
     handleSendForm() {
         if (this.state.inputCommentOk) {
-            axios.post('/api/comment-add', {
-                userId: this.props.user._id,
-                postId: this.props.postId,
-                userTitle: `${this.props.user.name} ${this.props.user.surname}`,
-                comment: this.state.inputCommentValue,
-                createDateTime: this.getDateTime()
-            }).then((result) => {
-                if (result.data.result.ok === 1) {
-                    this.setState(this.defaultStates);
-                    browserHistory.push(`/post/${this.props.postId}`);
-                }
-                /* todo alert error ... */
-                return false;
-            }).then((err) => {});
+            addComment(this.props.user._id, this.props.postId, `${this.props.user.name} ${this.props.user.surname}`, this.state.inputCommentValue, this.getDateTime());
         }
     }
 
     inputCommentChange(e) {
         this.checkInput(e, 'inputComment', {
             len: {
-                len: 10,
-                errorMessage: 'Name must min 10 symbols!'
+                len: 2,
+                errorMessage: 'Name must min 2 symbols!'
             }
         });
+    }
+
+    onCommentAdd() {
+        this.setState(this.defaultStates);
+        browserHistory.push(`/post/${this.props.postId}`);
+    }
+
+    componentWillMount() {
+        CommentsStore.on('change-add', this.onCommentAdd);
+    }
+
+    componentWillUnmount() {
+        CommentsStore.removeListener('change-add', this.onCommentAdd);
     }
 
     render() {

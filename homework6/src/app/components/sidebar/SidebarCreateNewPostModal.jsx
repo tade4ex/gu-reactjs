@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
+import PostsStore from '../../flux/store/PostsStore';
+import {addPost} from '../../flux/actions/postsActions';
 import FormComponent from "../FormComponent";
 
 export default class SidebarCreateNewPostModal extends FormComponent {
@@ -30,6 +32,7 @@ export default class SidebarCreateNewPostModal extends FormComponent {
         this.inputTitleChange = this.inputTitleChange.bind(this);
         this.inputShortTextChange = this.inputShortTextChange.bind(this);
         this.inputLongTextChange = this.inputLongTextChange.bind(this);
+        this.onPostAdd = this.onPostAdd.bind(this);
     }
 
     handleSendForm() {
@@ -38,31 +41,14 @@ export default class SidebarCreateNewPostModal extends FormComponent {
             this.state.inputShortTextOk &&
             this.state.inputLongTextOk
         ) {
-            axios.post('/api/post-add', {
-                createDateTime: this.getDateTime(),
-                img: null,
-                post: {
-                    title: this.state.inputTitleValue,
-                    shortText: this.state.inputShortTextValue,
-                    longText: this.state.inputLongTextValue
-                },
-                author: {
-                    title: `${this.props.user.name} ${this.props.user.surname}`,
-                    _id: this.props.user._id
-                },
-                commentsCount: 0
-            })
-                .then((result) => {
-                    if (result.data.result.ok === 1) {
-                        this.props.handleCloseModal();
-                        this.setState(this.defaultStates);
-                        browserHistory.push(`/post/${result.data.ops[0]._id}`);
-                    }
-                    /* todo alert error ... */
-                    return false;
-                })
-                .then((err) => {
-                });
+            addPost(this.getDateTime(), null, {
+                title: this.state.inputTitleValue,
+                shortText: this.state.inputShortTextValue,
+                longText: this.state.inputLongTextValue
+            },{
+                title: `${this.props.user.name} ${this.props.user.surname}`,
+                _id: this.props.user._id
+            }, 0);
         }
         return false;
     }
@@ -92,6 +78,20 @@ export default class SidebarCreateNewPostModal extends FormComponent {
                 errorMessage: 'Name must min 30 symbols!'
             }
         });
+    }
+
+    onPostAdd(post) {
+        this.props.handleCloseModal();
+        this.setState(this.defaultStates);
+        browserHistory.push(`/post/${post._id}`);
+    }
+
+    componentWillMount() {
+        PostsStore.on('change-add', this.onPostAdd);
+    }
+
+    componentWillUnmount() {
+        PostsStore.removeListener('change-add', this.onPostAdd);
     }
 
     render() {
