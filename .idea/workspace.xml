@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fa4ac14-3266-466d-b721-69bbfd297c79" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/homework6/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/homework6/src/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="8fa4ac14-3266-466d-b721-69bbfd297c79" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,43 +11,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Post.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework6/src/app/components/pagePost/Post.jsx">
+      <file leaf-file-name="usersActions.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/homework6/src/app/flux/actions/usersActions.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
+            <state relative-caret-position="475">
+              <caret line="33" column="32" lean-forward="true" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/homework6/src/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewPost.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework6/src/app/components/pagePost/ViewPost.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="2" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/homework6/src/app/components/userPage/User.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="55" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -221,114 +189,6 @@
               <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
               <item name="reactjs" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="pagePost" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="userPage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="flux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="flux" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="flux" type="462c0819:PsiDirectoryNode" />
-              <item name="constants" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="flux" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="layouts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="homework6" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -397,12 +257,12 @@
       <workItem from="1526118464142" duration="43926000" />
       <workItem from="1526322066557" duration="1823000" />
       <workItem from="1526401556742" duration="2853000" />
-      <workItem from="1526485919485" duration="16810000" />
+      <workItem from="1526485919485" duration="18164000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111417000" />
+    <option name="totallyTimeSpent" value="112771000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -684,16 +544,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homework6/src/app/flux/actions/usersActions.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework6/src/app/flux/store/UsersStore.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -841,23 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homework6/src/app/components/userPage/User.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/homework6/src/app/components/pagePost/ViewPost.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework6/src/app/components/pagePost/Post.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -872,6 +705,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/homework6/src/app/components/pagePost/ViewPost.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/homework6/src/app/components/userPage/User.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/homework6/src/app/flux/actions/usersActions.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="33" column="32" lean-forward="true" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
