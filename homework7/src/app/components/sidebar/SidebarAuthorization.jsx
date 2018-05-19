@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {Jumbotron, Form, FormGroup, Button} from 'react-bootstrap';
-import SidebarRegisterModal from "./SidebarRegisterModal";
-import AuthStore from '../../flux/store/AuthStore';
-import {authCheckUser} from '../../flux/actions/authActions';
+import React from 'react';
+import {connect} from 'react-redux';
+import {Form, FormGroup, Button} from 'react-bootstrap';
 
-export default class SidebarAuthorization extends Component {
+import SidebarRegisterModal from "./SidebarRegisterModal";
+import MasterComponent from "../../MasterComponent";
+import {authUser} from '../../../app/redux/actions/userActions';
+
+class SidebarAuthorization extends MasterComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,11 +21,11 @@ export default class SidebarAuthorization extends Component {
             sidebarInputPasswordError: false,
             sidebarInputPasswordErrorMessage: false
         };
+
         this.handleOpenCloseRegisterModal = this.handleOpenCloseRegisterModal.bind(this);
         this.sidebarInputEmailChange = this.sidebarInputEmailChange.bind(this);
         this.sidebarInputPasswordChange = this.sidebarInputPasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
-        this.onAuthChange = this.onAuthChange.bind(this);
     }
 
     handleLogin() {
@@ -31,27 +33,9 @@ export default class SidebarAuthorization extends Component {
             this.state.sidebarInputEmailOk &&
             this.state.sidebarInputPasswordOk
         ) {
-            authCheckUser(this.state.sidebarInputEmailValue, this.state.sidebarInputPasswordValue);
+            let user = authUser(this.state.sidebarInputEmailValue, this.state.sidebarInputPasswordValue);
+            this.props.dispatch(user);
         }
-    }
-
-    onAuthChange(authorization) {
-        if (
-            this.state.sidebarInputEmailOk &&
-            this.state.sidebarInputPasswordOk &&
-            authorization === false
-        ) {
-            alert('Bad email of password');
-        }
-    }
-
-    componentWillMount()
-    {
-        AuthStore.on('change', this.onAuthChange);
-    }
-
-    componentWillUnmount(){
-        AuthStore.removeListener('change', this.onAuthChange);
     }
 
     handleOpenCloseRegisterModal() {
@@ -105,7 +89,7 @@ export default class SidebarAuthorization extends Component {
     render() {
         return (
             <div>
-                <Jumbotron>
+                <div>
                     <h4>Hello, {this.state.username}!</h4>
                     <Form>
                         <FormGroup className={(this.state.sidebarInputEmailError ? 'has-error' : '')}>
@@ -129,10 +113,19 @@ export default class SidebarAuthorization extends Component {
                         <Button className="btn-default" onClick={this.handleLogin}>Login</Button> or <a
                         onClick={this.handleOpenCloseRegisterModal} href="#">register</a>
                     </Form>
-                </Jumbotron>
+                </div>
                 <SidebarRegisterModal modalShow={this.state.modalShow}
                                       handleCloseRegisterModal={this.handleOpenCloseRegisterModal}/>
             </div>
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        authorization: store.user.authorization,
+        is_fetching: store.user.is_fetching
+    };
+}
+
+export default connect(mapStateToProps)(SidebarAuthorization);

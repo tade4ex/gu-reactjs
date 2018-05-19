@@ -1,7 +1,9 @@
 import React from 'react';
-import Users from "../components/userPage/Users";
 
-export default class UsersPage extends React.Component
+import Users from "../components/userPage/Users";
+import MasterComponent from "../MasterComponent";
+
+export default class UsersPage extends MasterComponent
 {
     constructor(props) {
         super(props);

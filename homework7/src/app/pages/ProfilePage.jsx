@@ -1,51 +1,54 @@
-import React, {Component} from 'react';
-import UsersStore from "../flux/store/UsersStore";
-import {fetchUsers, getUser} from "../flux/actions/usersActions";
+import React from 'react';
+import {connect} from 'react-redux';
 
-export default class ProfilePage extends Component {
-    constructor(props) {
-        super(props);
+import MasterComponent from "../MasterComponent";
+import {getUser} from '../../app/redux/actions/userActions';
 
+class ProfilePage extends MasterComponent {
+    constructor() {
+        super(...arguments);
         this.userId = this.props.params.id;
-
-        this.state = {
-            user: null
-        };
-
-        this.onUserGet = this.onUserGet.bind(this);
+        this.changeProps();
     }
 
-    onUserGet(user) {
-        this.setState({
-            user
-        });
-    }
-
-    componentWillMount() {
-        UsersStore.on('change-get', this.onUserGet);
-    }
-
-    componentDidMount() {
-        getUser(this.userId);
+    changeProps() {
+        let user = getUser(this.userId);
+        this.props.dispatch(user);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.userId = nextProps.params.id;
-        getUser(this.userId);
-    }
-
-    componentWillUnmount() {
-        UsersStore.removeListener('change-get', this.onUserGet);
+        if (nextProps.params.id !== this.userId) {
+            this.userId = nextProps.params.id;
+            this.changeProps();
+        }
     }
 
     render() {
+        console.log('profile', this.props);
         return (<div>
             <h1>USER PROFILE</h1>
-            {this.state.user && <div>
-                <p><b>Name:</b> {this.state.user.name}</p>
-                <p><b>Surname:</b> {this.state.user.surname}</p>
-                <p><b>Email:</b> {this.state.user.email}</p>
-            </div>}
+            {
+                this.props.get_is_fetching
+                    ? this.bubbling()
+                    : (
+                        this.props.user == null
+                            ? this.alert('danger', 'user not find')
+                            : <div>
+                                <p><b>Name:</b> {this.props.user.name}</p>
+                                <p><b>Surname:</b> {this.props.user.surname}</p>
+                                <p><b>Email:</b> {this.props.user.email}</p>
+                            </div>
+                    )
+            }
         </div>);
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        get_is_fetching: store.user.get_is_fetching
+    };
+}
+
+export default connect(mapStateToProps)(ProfilePage);

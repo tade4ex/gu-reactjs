@@ -1,50 +1,43 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
+import {Jumbotron} from 'react-bootstrap';
 
+import MasterComponent from "../MasterComponent";
 import SidebarAuthorization from "../components/sidebar/SidebarAuthorization";
 import SidebarArchivesCategories from "../components/sidebar/SidebarArchivesCategories";
 import SidebarUser from "../components/sidebar/SidebarUser";
-import AuthStore from '../flux/store/AuthStore';
-import {fetchAuth} from '../flux/actions/authActions';
+import {isAuthUser} from '../../app/redux/actions/userActions';
 
-export default class Sidebar extends Component {
-    constructor(props) {
-        super(props);
+class Sidebar extends MasterComponent {
+    constructor() {
+        super(...arguments);
 
-        this.state = {
-            authorization: false
-        };
-
-        this.onAuthChange = this.onAuthChange.bind(this);
-    }
-
-    onAuthChange(authorization) {
-        this.setState({
-            authorization
-        });
-    }
-
-    componentWillMount()
-    {
-        AuthStore.on('change', this.onAuthChange);
-    }
-
-    componentDidMount()
-    {
-        fetchAuth();
-    }
-
-    componentWillUnmount(){
-        AuthStore.removeListener('change', this.onAuthChange);
+        let user = isAuthUser();
+        this.props.dispatch(user);
     }
 
     render() {
+        console.log('sidebar', this.props);
         return (
             <div className="col col-lg-4">
-                {this.state.authorization ?
-                    <SidebarUser/> :
-                    <SidebarAuthorization/>}
+                <Jumbotron>
+                    {
+                        this.props.is_fetching
+                            ? this.bubbling()
+                            : this.props.authorization ? <SidebarUser/> : <SidebarAuthorization/>
+                    }
+                </Jumbotron>
                 <SidebarArchivesCategories/>
             </div>
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        authorization: store.user.authorization,
+        is_fetching: store.user.is_fetching
+    };
+}
+
+export default connect(mapStateToProps)(Sidebar);

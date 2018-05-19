@@ -1,14 +1,16 @@
-import React, {Component} from 'react';
-import {Jumbotron, Button} from 'react-bootstrap';
+import React from 'react';
+import {connect} from 'react-redux';
+import {Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
+import MasterComponent from "../../MasterComponent";
 import AuthUserStore from '../../flux/store/AuthUserStore';
 import {fetchAuthUser} from '../../flux/actions/authUserActions';
-import {logout} from '../../flux/actions/authActions';
 import SidebarCreateNewUserModal from "./SidebarCreateNewUserModal";
 import SidebarCreateNewPostModal from "./SidebarCreateNewPostModal";
+import {logoutUser} from '../../../app/redux/actions/userActions';
 
-export default class SidebarUser extends Component {
+class SidebarUser extends MasterComponent {
     constructor(props) {
         super(props);
 
@@ -26,7 +28,8 @@ export default class SidebarUser extends Component {
     }
 
     handleLogout() {
-        logout();
+        let user = logoutUser();
+        this.props.dispatch(user);
     }
 
     handleOpenCloseCreateNewUserModal() {
@@ -57,7 +60,7 @@ export default class SidebarUser extends Component {
 
     render() {
         return (
-            <Jumbotron>
+            <div>
                 {this.state.user && <div>
                     <h4>Hello, {this.state.user.name}!</h4>
                     <hr/>
@@ -77,7 +80,16 @@ export default class SidebarUser extends Component {
                     <SidebarCreateNewPostModal user={this.state.user} modalShow={this.state.modalCreateNewPostShow}
                                                handleCloseModal={this.handleOpenCloseCreateNewPostModal}/>
                 </div>}
-            </Jumbotron>
+            </div>
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        authorization: store.user.authorization,
+        is_fetching: store.user.is_fetching
+    };
+}
+
+export default connect(mapStateToProps)(SidebarUser);

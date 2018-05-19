@@ -31,18 +31,16 @@ class User {
     }
 
     authorization(email, password, postRes, callback) {
-        let auth = {
-            authorization: false
-        };
+        let authorization = false;
         this.db.collectionUsers('get', {email: email}, (err, result) => {
-            if (err) return console.log(auth);
+            if (err) return console.log(err);
             if (this.checkPassword(password, result.password)) {
-                auth.authorization = true;
+                authorization = true;
                 postRes.cookie('email', result.email, { maxAge: 900000, httpOnly: true });
                 postRes.cookie('password', result.password, { maxAge: 900000, httpOnly: true });
-                return callback(auth);
+                return callback(authorization);
             }
-            return callback(auth);
+            return callback(authorization);
         });
     }
 
@@ -60,22 +58,20 @@ class User {
     }
 
     checkAuthorization(cookies, callback) {
-        let auth = {
-            authorization: false
-        };
+        let authorization = false;
         if (cookies.email != null && cookies.password != null) {
             this.db.collectionUsers('get', {email: cookies.email, password: cookies.password}, (err, result) => {
                 if (err) {
-                    return callback(auth);
+                    return callback(authorization);
                 }
                 if (result != null) {
-                    auth.authorization = true;
-                    return callback(auth);
+                    authorization = true;
+                    return callback(authorization);
                 }
-                return callback(auth);
+                return callback(authorization);
             });
         } else {
-            return callback(auth);
+            return callback(authorization);
         }
     }
 
