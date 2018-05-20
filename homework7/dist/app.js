@@ -66,27 +66,27 @@
 
 	var _Layout2 = _interopRequireDefault(_Layout);
 
-	var _PostsPage = __webpack_require__(464);
+	var _PostsPage = __webpack_require__(461);
 
 	var _PostsPage2 = _interopRequireDefault(_PostsPage);
 
-	var _PostPage = __webpack_require__(467);
+	var _PostPage = __webpack_require__(464);
 
 	var _PostPage2 = _interopRequireDefault(_PostPage);
 
-	var _AboutPage = __webpack_require__(478);
+	var _AboutPage = __webpack_require__(475);
 
 	var _AboutPage2 = _interopRequireDefault(_AboutPage);
 
-	var _ContactsPage = __webpack_require__(479);
+	var _ContactsPage = __webpack_require__(476);
 
 	var _ContactsPage2 = _interopRequireDefault(_ContactsPage);
 
-	var _UsersPage = __webpack_require__(480);
+	var _UsersPage = __webpack_require__(477);
 
 	var _UsersPage2 = _interopRequireDefault(_UsersPage);
 
-	var _ProfilePage = __webpack_require__(483);
+	var _ProfilePage = __webpack_require__(481);
 
 	var _ProfilePage2 = _interopRequireDefault(_ProfilePage);
 
@@ -29482,15 +29482,15 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case UsersConstants.FETCH_USER_PENDING:
+	        case UsersConstants.FETCH_USERS_PENDING:
 	            {
-	                state = _extends({}, state, { is_fetching: false });
+	                state = _extends({}, state, { is_fetching: true });
 	                break;
 	            }
 
 	        case UsersConstants.FETCH_USERS_FULFILLED:
 	            {
-	                state = _extends({}, state, { is_fetching: true, users: action.payload.data.users, lastPage: action.payload.data.lastPage });
+	                state = _extends({}, state, { is_fetching: false, users: action.payload.data.users, lastPage: action.payload.data.lastPage });
 	                break;
 	            }
 
@@ -29550,7 +29550,7 @@
 	            }
 	        case UserConstants.ADD_USER_FULFILLED:
 	            {
-	                state = _extends({}, state, { add_is_fetching: false, user: action.payload.data, success: action.payload.data.success });
+	                state = _extends({}, state, { add_is_fetching: false, user: action.payload.data.ops[0], success: action.payload.data.result.ok });
 	                break;
 	            }
 	        case UserConstants.ADD_USER_REJECTED:
@@ -29697,7 +29697,7 @@
 
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 
-	var _Footer = __webpack_require__(461);
+	var _Footer = __webpack_require__(458);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -53795,6 +53795,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _MasterComponent2 = __webpack_require__(413);
+
+	var _MasterComponent3 = _interopRequireDefault(_MasterComponent2);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53803,8 +53807,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var FormComponent = function (_Component) {
-	    _inherits(FormComponent, _Component);
+	var FormComponent = function (_MasterComponent) {
+	    _inherits(FormComponent, _MasterComponent);
 
 	    function FormComponent(props) {
 	        _classCallCheck(this, FormComponent);
@@ -53866,7 +53870,7 @@
 	    }]);
 
 	    return FormComponent;
-	}(_react.Component);
+	}(_MasterComponent3.default);
 
 	exports.default = FormComponent;
 
@@ -53929,7 +53933,12 @@
 	    var url = '/api/user-add';
 	    return {
 	        type: _userConstants.ADD_USER,
-	        payload: _axios2.default.post(url, _extends({}, arguments))
+	        payload: _axios2.default.post(url, {
+	            name: name,
+	            surname: surname,
+	            email: email,
+	            password: password
+	        })
 	    };
 	}
 
@@ -54093,7 +54102,7 @@
 
 	var _SidebarCreateNewUserModal2 = _interopRequireDefault(_SidebarCreateNewUserModal);
 
-	var _SidebarCreateNewPostModal = __webpack_require__(457);
+	var _SidebarCreateNewPostModal = __webpack_require__(454);
 
 	var _SidebarCreateNewPostModal2 = _interopRequireDefault(_SidebarCreateNewPostModal);
 
@@ -54973,7 +54982,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -54985,15 +54993,13 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _UsersStore = __webpack_require__(454);
-
-	var _UsersStore2 = _interopRequireDefault(_UsersStore);
-
-	var _usersActions = __webpack_require__(456);
+	var _reactRedux = __webpack_require__(85);
 
 	var _FormComponent2 = __webpack_require__(442);
 
 	var _FormComponent3 = _interopRequireDefault(_FormComponent2);
+
+	var _userActions = __webpack_require__(443);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55006,10 +55012,10 @@
 	var SidebarCreateNewUserModal = function (_FormComponent) {
 	    _inherits(SidebarCreateNewUserModal, _FormComponent);
 
-	    function SidebarCreateNewUserModal(props) {
+	    function SidebarCreateNewUserModal() {
 	        _classCallCheck(this, SidebarCreateNewUserModal);
 
-	        var _this = _possibleConstructorReturn(this, (SidebarCreateNewUserModal.__proto__ || Object.getPrototypeOf(SidebarCreateNewUserModal)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (SidebarCreateNewUserModal.__proto__ || Object.getPrototypeOf(SidebarCreateNewUserModal)).apply(this, arguments));
 
 	        _this.state = {
 	            inputNameValue: '',
@@ -55034,13 +55040,15 @@
 	            inputRepeatPasswordErrorMessage: ''
 	        };
 
+	        _this.newUserRedirect = false;
+
 	        _this.handleRegisterForm = _this.handleRegisterForm.bind(_this);
 	        _this.inputNameChange = _this.inputNameChange.bind(_this);
 	        _this.inputSurnameChange = _this.inputSurnameChange.bind(_this);
 	        _this.inputEmailChange = _this.inputEmailChange.bind(_this);
 	        _this.inputPasswordChange = _this.inputPasswordChange.bind(_this);
 	        _this.inputRepeatPasswordChange = _this.inputRepeatPasswordChange.bind(_this);
-	        _this.onUserChangeAdd = _this.onUserChangeAdd.bind(_this);
+	        _this.userAddSuccess = _this.userAddSuccess.bind(_this);
 	        return _this;
 	    }
 
@@ -55048,7 +55056,8 @@
 	        key: 'handleRegisterForm',
 	        value: function handleRegisterForm() {
 	            if (this.state.inputNameOk && this.state.inputSurnameOk && this.state.inputEmailOk && this.state.inputPasswordOk && this.state.inputRepeatPasswordOk) {
-	                (0, _usersActions.addUser)(this.state.inputNameValue, this.state.inputSurnameValue, this.state.inputEmailValue, this.state.inputPasswordValue);
+	                var user = (0, _userActions.addUser)(this.state.inputNameValue, this.state.inputSurnameValue, this.state.inputEmailValue, this.state.inputPasswordValue);
+	                this.props.dispatch(user);
 	            }
 	            return false;
 	        }
@@ -55108,21 +55117,17 @@
 	            });
 	        }
 	    }, {
-	        key: 'onUserChangeAdd',
-	        value: function onUserChangeAdd(user) {
-	            this.props.handleCloseModal();
-	            this.setState(this.defaultStates);
-	            _reactRouter.browserHistory.push('/profile/' + user._id);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            _UsersStore2.default.on('change-add', this.onUserChangeAdd);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            _UsersStore2.default.removeListener('change-add', this.onUserChangeAdd);
+	        key: 'userAddSuccess',
+	        value: function userAddSuccess() {
+	            if (this.props.user != null && !this.newUserRedirect) {
+	                var _id = this.props.user._id;
+	                if (_id != null) {
+	                    this.newUserRedirect = true;
+	                    this.props.handleCloseModal();
+	                    this.setState(this.defaultStates);
+	                    _reactRouter.browserHistory.push('/profile/' + _id);
+	                }
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -55245,12 +55250,15 @@
 	                                    this.state.inputRepeatPasswordError ? this.state.inputRepeatPasswordErrorMessage : ''
 	                                )
 	                            ),
-	                            _react2.default.createElement(
+	                            this.props.add_is_fetching ? this.bubbling() : _react2.default.createElement(
 	                                _reactBootstrap.Button,
 	                                { className: 'btn-primary',
 	                                    onClick: this.handleRegisterForm },
 	                                'Add'
-	                            )
+	                            ),
+
+	                            /* todo alert... */
+	                            this.props.success ? this.userAddSuccess() : ''
 	                        )
 	                    )
 	                )
@@ -55261,293 +55269,19 @@
 	    return SidebarCreateNewUserModal;
 	}(_FormComponent3.default);
 
-	exports.default = SidebarCreateNewUserModal;
+	function mapStateToProps(store) {
+	    return {
+	        user: store.user.user,
+	        success: store.user.success,
+	        lastPage: store.user.lastPage,
+	        add_is_fetching: store.user.add_is_fetching
+	    };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(SidebarCreateNewUserModal);
 
 /***/ }),
 /* 454 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _events = __webpack_require__(447);
-
-	var _usersConstants = __webpack_require__(455);
-
-	var _dispatcher = __webpack_require__(449);
-
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-
-	var _axios = __webpack_require__(416);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var UsersStore = function (_EventEmitter) {
-	    _inherits(UsersStore, _EventEmitter);
-
-	    function UsersStore() {
-	        _classCallCheck(this, UsersStore);
-
-	        var _this = _possibleConstructorReturn(this, (UsersStore.__proto__ || Object.getPrototypeOf(UsersStore)).apply(this, arguments));
-
-	        _this.data = {
-	            users: [],
-	            lastPage: 0
-	        };
-
-	        _this.user = {
-	            get: null,
-	            add: null,
-	            update: null,
-	            remove: null
-	        };
-
-	        _this.fetchUsersStart = _this.fetchUsersStart.bind(_this);
-	        _this.fetchUsersEnd = _this.fetchUsersEnd.bind(_this);
-	        _this.addUser = _this.addUser.bind(_this);
-	        _this.getUser = _this.getUser.bind(_this);
-	        _this.fetchUserAdd = _this.fetchUserAdd.bind(_this);
-	        _this.fetchUserGet = _this.fetchUserGet.bind(_this);
-
-	        _this.change = _this.change.bind(_this);
-	        _this.changeGet = _this.changeGet.bind(_this);
-	        _this.changeAdd = _this.changeAdd.bind(_this);
-	        _this.changeUpdate = _this.changeUpdate.bind(_this);
-	        _this.changeRemove = _this.changeRemove.bind(_this);
-	        _this.handleActions = _this.handleActions.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(UsersStore, [{
-	        key: 'fetchUsersStart',
-	        value: function fetchUsersStart(params) {
-	            var data = {
-	                users: [],
-	                lastPage: 0,
-	                page: 1
-	            };
-	            _axios2.default.post('/api/users-all', {
-	                page: params.page,
-	                limit: params.limitPerPage
-	            }).then(function (response) {
-	                if (response.data.users != null) {
-	                    data = response.data;
-	                }
-	                _dispatcher2.default.dispatch({
-	                    type: _usersConstants.FETCH_USERS_END,
-	                    payload: data
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'fetchUsersEnd',
-	        value: function fetchUsersEnd(data) {
-	            this.data = data;
-	            this.change();
-	        }
-	    }, {
-	        key: 'getUser',
-	        value: function getUser(userId) {
-	            _axios2.default.get('/api/user/' + userId).then(function (response) {
-	                _dispatcher2.default.dispatch({
-	                    type: _usersConstants.FETCH_USER_GET,
-	                    payload: response.data
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'addUser',
-	        value: function addUser(user) {
-	            _axios2.default.post('/api/user-add', {
-	                name: user.name,
-	                surname: user.surname,
-	                email: user.email,
-	                password: user.password
-	            }).then(function (response) {
-	                if (response.data.result.ok === 1) {
-	                    _dispatcher2.default.dispatch({
-	                        type: _usersConstants.FETCH_USER_ADD,
-	                        payload: response.data.ops[0]
-	                    });
-	                }
-	                /* todo aler bootstrap this email exists */
-	                return false;
-	            });
-	        }
-	    }, {
-	        key: 'fetchUserAdd',
-	        value: function fetchUserAdd(user) {
-	            this.user.add = user;
-	            this.changeAdd();
-	        }
-	    }, {
-	        key: 'fetchUserGet',
-	        value: function fetchUserGet(user) {
-	            this.user.get = user;
-	            this.changeGet();
-	        }
-	    }, {
-	        key: 'change',
-	        value: function change() {
-	            this.emit('change', this.data);
-	        }
-	    }, {
-	        key: 'changeGet',
-	        value: function changeGet() {
-	            this.emit('change-get', this.user.get);
-	        }
-	    }, {
-	        key: 'changeAdd',
-	        value: function changeAdd() {
-	            this.emit('change-add', this.user.add);
-	        }
-	    }, {
-	        key: 'changeUpdate',
-	        value: function changeUpdate() {
-	            this.emit('change-update', this.user.update);
-	        }
-	    }, {
-	        key: 'changeRemove',
-	        value: function changeRemove() {
-	            this.emit('change-remove', this.user.remove);
-	        }
-	    }, {
-	        key: 'handleActions',
-	        value: function handleActions(action) {
-	            switch (action.type) {
-	                case _usersConstants.FETCH_USERS_START:
-	                    {
-	                        this.fetchUsersStart(action.payload);
-	                        break;
-	                    }
-	                case _usersConstants.FETCH_USERS_END:
-	                    {
-	                        this.fetchUsersEnd(action.payload);
-	                        break;
-	                    }
-	                case _usersConstants.ADD_USER:
-	                    {
-	                        this.addUser(action.payload);
-	                        break;
-	                    }
-	                case _usersConstants.FETCH_USER_ADD:
-	                    {
-	                        this.fetchUserAdd(action.payload);
-	                        break;
-	                    }
-	                case _usersConstants.GET_USER:
-	                    {
-	                        this.getUser(action.payload);
-	                        break;
-	                    }
-	                case _usersConstants.FETCH_USER_GET:
-	                    {
-	                        this.fetchUserGet(action.payload);
-	                        break;
-	                    }
-	            }
-	        }
-	    }]);
-
-	    return UsersStore;
-	}(_events.EventEmitter);
-
-	var userStore = new UsersStore();
-	_dispatcher2.default.register(userStore.handleActions);
-	exports.default = userStore;
-
-/***/ }),
-/* 455 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var GET_USER = exports.GET_USER = 'GET_USER';
-	var ADD_USER = exports.ADD_USER = 'ADD_USER';
-	var UPDATE_USER = exports.UPDATE_USER = 'UPDATE_USER';
-	var REMOVE_USER = exports.REMOVE_USER = 'REMOVE_USER';
-	var FETCH_USER_GET = exports.FETCH_USER_GET = 'FETCH_USER_GET';
-	var FETCH_USER_ADD = exports.FETCH_USER_ADD = 'FETCH_USER_ADD';
-	var FETCH_USER_UPDATE = exports.FETCH_USER_UPDATE = 'FETCH_USER_UPDATE';
-	var FETCH_USER_REMOVE = exports.FETCH_USER_REMOVE = 'FETCH_USER_REMOVE';
-
-	var FETCH_USERS_START = exports.FETCH_USERS_START = 'FETCH_USERS_START';
-	var FETCH_USERS_END = exports.FETCH_USERS_END = 'FETCH_USERS_END';
-
-/***/ }),
-/* 456 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.addUser = addUser;
-	exports.getUser = getUser;
-	exports.fetchUsers = fetchUsers;
-
-	var _dispatcher = __webpack_require__(449);
-
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-
-	var _usersConstants = __webpack_require__(455);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function addUser(name, surname, email, password) {
-	    var user = {
-	        name: name,
-	        surname: surname,
-	        email: email,
-	        password: password
-	    };
-
-	    _dispatcher2.default.dispatch({
-	        type: _usersConstants.ADD_USER,
-	        payload: user
-	    });
-	}
-
-	function getUser(userId) {
-	    setTimeout(function () {
-	        _dispatcher2.default.dispatch({
-	            type: _usersConstants.GET_USER,
-	            payload: userId
-	        });
-	    }, 1);
-	}
-
-	function fetchUsers(page, limitPerPage) {
-	    var params = {
-	        page: page,
-	        limitPerPage: limitPerPage
-	    };
-
-	    _dispatcher2.default.dispatch({
-	        type: _usersConstants.FETCH_USERS_START,
-	        payload: params
-	    });
-	}
-
-/***/ }),
-/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55571,11 +55305,11 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _PostsStore = __webpack_require__(458);
+	var _PostsStore = __webpack_require__(455);
 
 	var _PostsStore2 = _interopRequireDefault(_PostsStore);
 
-	var _postsActions = __webpack_require__(460);
+	var _postsActions = __webpack_require__(457);
 
 	var _FormComponent2 = __webpack_require__(442);
 
@@ -55788,7 +55522,7 @@
 	exports.default = SidebarCreateNewPostModal;
 
 /***/ }),
-/* 458 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55801,7 +55535,7 @@
 
 	var _events = __webpack_require__(447);
 
-	var _postsConstatns = __webpack_require__(459);
+	var _postsConstatns = __webpack_require__(456);
 
 	var _dispatcher = __webpack_require__(449);
 
@@ -55996,7 +55730,7 @@
 	exports.default = postStore;
 
 /***/ }),
-/* 459 */
+/* 456 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -56017,7 +55751,7 @@
 	var FETCH_POSTS_END = exports.FETCH_POSTS_END = 'FETCH_POSTS_END';
 
 /***/ }),
-/* 460 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -56033,7 +55767,7 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _postsConstatns = __webpack_require__(459);
+	var _postsConstatns = __webpack_require__(456);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56074,7 +55808,7 @@
 	}
 
 /***/ }),
-/* 461 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56090,7 +55824,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(462);
+	__webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56133,13 +55867,13 @@
 	exports.default = Footer;
 
 /***/ }),
-/* 462 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(463);
+	var content = __webpack_require__(460);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(137)(content, {});
@@ -56159,7 +55893,7 @@
 	}
 
 /***/ }),
-/* 463 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(136)();
@@ -56173,7 +55907,7 @@
 
 
 /***/ }),
-/* 464 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -56189,7 +55923,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Posts = __webpack_require__(465);
+	var _Posts = __webpack_require__(462);
 
 	var _Posts2 = _interopRequireDefault(_Posts);
 
@@ -56235,7 +55969,7 @@
 	exports.default = PostsPage;
 
 /***/ }),
-/* 465 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56253,17 +55987,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Post = __webpack_require__(466);
+	var _Post = __webpack_require__(463);
 
 	var _Post2 = _interopRequireDefault(_Post);
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _PostsStore = __webpack_require__(458);
+	var _PostsStore = __webpack_require__(455);
 
 	var _PostsStore2 = _interopRequireDefault(_PostsStore);
 
-	var _postsActions = __webpack_require__(460);
+	var _postsActions = __webpack_require__(457);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56388,7 +56122,7 @@
 	exports.default = Posts;
 
 /***/ }),
-/* 466 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56503,7 +56237,7 @@
 	exports.default = Post;
 
 /***/ }),
-/* 467 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -56521,15 +56255,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ViewPost = __webpack_require__(468);
+	var _ViewPost = __webpack_require__(465);
 
 	var _ViewPost2 = _interopRequireDefault(_ViewPost);
 
-	var _PostsStore = __webpack_require__(458);
+	var _PostsStore = __webpack_require__(455);
 
 	var _PostsStore2 = _interopRequireDefault(_PostsStore);
 
-	var _postsActions = __webpack_require__(460);
+	var _postsActions = __webpack_require__(457);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56602,7 +56336,7 @@
 	exports.default = PostsPage;
 
 /***/ }),
-/* 468 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56622,7 +56356,7 @@
 
 	var _reactRouter = __webpack_require__(25);
 
-	var _Comments = __webpack_require__(469);
+	var _Comments = __webpack_require__(466);
 
 	var _Comments2 = _interopRequireDefault(_Comments);
 
@@ -56728,7 +56462,7 @@
 	exports.default = ViewPost;
 
 /***/ }),
-/* 469 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -56746,17 +56480,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CommentsStore = __webpack_require__(470);
+	var _CommentsStore = __webpack_require__(467);
 
 	var _CommentsStore2 = _interopRequireDefault(_CommentsStore);
 
-	var _commentsAction = __webpack_require__(472);
+	var _commentsAction = __webpack_require__(469);
 
-	var _AuthStore = __webpack_require__(473);
+	var _AuthStore = __webpack_require__(470);
 
 	var _AuthStore2 = _interopRequireDefault(_AuthStore);
 
-	var _authActions = __webpack_require__(475);
+	var _authActions = __webpack_require__(472);
 
 	var _AuthUserStore = __webpack_require__(446);
 
@@ -56764,15 +56498,15 @@
 
 	var _authUserActions = __webpack_require__(452);
 
-	var _Comment = __webpack_require__(476);
+	var _Comment = __webpack_require__(473);
 
 	var _Comment2 = _interopRequireDefault(_Comment);
 
-	var _CreateComment = __webpack_require__(477);
+	var _CreateComment = __webpack_require__(474);
 
 	var _CreateComment2 = _interopRequireDefault(_CreateComment);
 
-	var _postsActions = __webpack_require__(460);
+	var _postsActions = __webpack_require__(457);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56880,7 +56614,7 @@
 	exports.default = Comments;
 
 /***/ }),
-/* 470 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56893,7 +56627,7 @@
 
 	var _events = __webpack_require__(447);
 
-	var _commentsConstants = __webpack_require__(471);
+	var _commentsConstants = __webpack_require__(468);
 
 	var _dispatcher = __webpack_require__(449);
 
@@ -57046,7 +56780,7 @@
 	exports.default = commentStore;
 
 /***/ }),
-/* 471 */
+/* 468 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -57067,7 +56801,7 @@
 	var FETCH_COMMENTS_END = exports.FETCH_COMMENTS_END = 'FETCH_COMMENTS_END';
 
 /***/ }),
-/* 472 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57082,7 +56816,7 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _commentsConstants = __webpack_require__(471);
+	var _commentsConstants = __webpack_require__(468);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57111,7 +56845,7 @@
 	}
 
 /***/ }),
-/* 473 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57124,7 +56858,7 @@
 
 	var _events = __webpack_require__(447);
 
-	var _authConstants = __webpack_require__(474);
+	var _authConstants = __webpack_require__(471);
 
 	var _dispatcher = __webpack_require__(449);
 
@@ -57240,7 +56974,7 @@
 	exports.default = authStore;
 
 /***/ }),
-/* 474 */
+/* 471 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -57254,7 +56988,7 @@
 	var FETCH_AUTH_END = exports.FETCH_AUTH_END = 'FETCH_AUTH_END';
 
 /***/ }),
-/* 475 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57270,7 +57004,7 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _authConstants = __webpack_require__(474);
+	var _authConstants = __webpack_require__(471);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57301,7 +57035,7 @@
 	}
 
 /***/ }),
-/* 476 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57368,7 +57102,7 @@
 	exports.default = Comment;
 
 /***/ }),
-/* 477 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57396,19 +57130,19 @@
 
 	var _FormComponent3 = _interopRequireDefault(_FormComponent2);
 
-	var _commentsAction = __webpack_require__(472);
+	var _commentsAction = __webpack_require__(469);
 
 	var _AuthUserStore = __webpack_require__(446);
 
 	var _AuthUserStore2 = _interopRequireDefault(_AuthUserStore);
 
-	var _authActions = __webpack_require__(475);
+	var _authActions = __webpack_require__(472);
 
-	var _CommentsStore = __webpack_require__(470);
+	var _CommentsStore = __webpack_require__(467);
 
 	var _CommentsStore2 = _interopRequireDefault(_CommentsStore);
 
-	var _AuthStore = __webpack_require__(473);
+	var _AuthStore = __webpack_require__(470);
 
 	var _AuthStore2 = _interopRequireDefault(_AuthStore);
 
@@ -57520,7 +57254,7 @@
 	exports.default = CreateComment;
 
 /***/ }),
-/* 478 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57594,7 +57328,7 @@
 	exports.default = AboutPage;
 
 /***/ }),
-/* 479 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57667,7 +57401,7 @@
 	exports.default = ContactsPage;
 
 /***/ }),
-/* 480 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57683,7 +57417,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Users = __webpack_require__(481);
+	var _Users = __webpack_require__(478);
 
 	var _Users2 = _interopRequireDefault(_Users);
 
@@ -57733,7 +57467,7 @@
 	exports.default = UsersPage;
 
 /***/ }),
-/* 481 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57741,7 +57475,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -57755,15 +57488,17 @@
 
 	var _reactBootstrap = __webpack_require__(142);
 
-	var _User = __webpack_require__(482);
+	var _reactRedux = __webpack_require__(85);
+
+	var _User = __webpack_require__(479);
 
 	var _User2 = _interopRequireDefault(_User);
 
-	var _UsersStore = __webpack_require__(454);
+	var _usersActions = __webpack_require__(480);
 
-	var _UsersStore2 = _interopRequireDefault(_UsersStore);
+	var _MasterComponent2 = __webpack_require__(413);
 
-	var _usersActions = __webpack_require__(456);
+	var _MasterComponent3 = _interopRequireDefault(_MasterComponent2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57773,65 +57508,45 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Users = function (_Component) {
-	    _inherits(Users, _Component);
+	var Users = function (_MasterComponent) {
+	    _inherits(Users, _MasterComponent);
 
-	    function Users(props) {
+	    function Users() {
 	        _classCallCheck(this, Users);
 
-	        var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this, props));
-
-	        _this.state = {
-	            users: [],
-	            lastPage: 0
-	        };
+	        var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).apply(this, arguments));
 
 	        _this.page = parseInt(_this.props.page);
 	        _this.limitPerPage = 5;
-
-	        _this.onUsersChange = _this.onUsersChange.bind(_this);
+	        _this.changeProps();
 	        return _this;
 	    }
 
 	    _createClass(Users, [{
+	        key: 'changeProps',
+	        value: function changeProps() {
+	            var users = (0, _usersActions.fetchUsers)(this.page, this.limitPerPage);
+	            this.props.dispatch(users);
+	        }
+	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            this.page = parseInt(nextProps.page);
-	            (0, _usersActions.fetchUsers)(this.page, this.limitPerPage);
-	        }
-	    }, {
-	        key: 'onUsersChange',
-	        value: function onUsersChange(data) {
-	            this.setState({
-	                users: data.users,
-	                lastPage: data.lastPage
-	            });
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            _UsersStore2.default.on('change', this.onUsersChange);
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            (0, _usersActions.fetchUsers)(this.page, this.limitPerPage);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            _UsersStore2.default.removeListener('change', this.onUsersChange);
+	            var propsPage = parseInt(nextProps.page);
+	            if (this.page !== propsPage) {
+	                this.page = propsPage;
+	                this.changeProps();
+	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var users = this.state.users.map(function (user) {
+	            var users = this.props.users.map(function (user) {
 	                return _react2.default.createElement(_User2.default, _extends({}, user, { key: user._id }));
 	            });
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(
+	                this.props.is_fetching ? this.bubbling() : users.length > 0 ? _react2.default.createElement(
 	                    _reactBootstrap.Table,
 	                    { striped: true },
 	                    _react2.default.createElement(
@@ -57872,7 +57587,7 @@
 	                        null,
 	                        users
 	                    )
-	                ),
+	                ) : this.alert('danger', 'users not found'),
 	                _react2.default.createElement(
 	                    'nav',
 	                    { 'aria-label': '' },
@@ -57894,7 +57609,7 @@
 	                                ' Previous'
 	                            )
 	                        ) : '',
-	                        this.state.lastPage > this.page ? _react2.default.createElement(
+	                        this.props.lastPage > this.page ? _react2.default.createElement(
 	                            'li',
 	                            { className: 'next' },
 	                            _react2.default.createElement(
@@ -57916,12 +57631,20 @@
 	    }]);
 
 	    return Users;
-	}(_react.Component);
+	}(_MasterComponent3.default);
 
-	exports.default = Users;
+	function mapStateToProps(store) {
+	    return {
+	        users: store.users.users,
+	        lastPage: store.users.lastPage,
+	        is_fetching: store.users.is_fetching
+	    };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Users);
 
 /***/ }),
-/* 482 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58001,7 +57724,34 @@
 	exports.default = User;
 
 /***/ }),
-/* 483 */
+/* 480 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.fetchUsers = fetchUsers;
+
+	var _axios = __webpack_require__(416);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _usersConstants = __webpack_require__(130);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function fetchUsers(page, limit) {
+	    var url = "/api/users-all";
+	    return {
+	        type: _usersConstants.FETCH_USERS,
+	        payload: _axios2.default.post(url, { page: page, limit: limit })
+	    };
+	}
+
+/***/ }),
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58062,7 +57812,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.log('profile', this.props);
 	            return _react2.default.createElement(
 	                'div',
 	                null,

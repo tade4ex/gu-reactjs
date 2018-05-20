@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
+import MasterComponent from "../MasterComponent";
 
-export default class FormComponent extends Component {
+export default class FormComponent extends MasterComponent {
     constructor(props) {
         super(props);
     }

@@ -4,13 +4,13 @@ export function usersReducer(state = {
     users: [], is_fetching: false, lastPage: 0
 }, action) {
     switch (action.type) {
-        case UsersConstants.FETCH_USER_PENDING: {
-            state = {...state, is_fetching: false};
+        case UsersConstants.FETCH_USERS_PENDING: {
+            state = {...state, is_fetching: true};
             break;
         }
 
         case UsersConstants.FETCH_USERS_FULFILLED: {
-            state = {...state, is_fetching: true, users: action.payload.data.users, lastPage: action.payload.data.lastPage};
+            state = {...state, is_fetching: false, users: action.payload.data.users, lastPage: action.payload.data.lastPage};
             break;
         }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 import {browserHistory} from "react-router";
+import {connect} from 'react-redux';
 
-import UsersStore from '../../flux/store/UsersStore';
-import {addUser} from '../../flux/actions/usersActions';
 import FormComponent from "../FormComponent";
+import {addUser} from '../../redux/actions/userActions';
 
-export default class SidebarCreateNewUserModal extends FormComponent {
-    constructor(props) {
-        super(props);
+class SidebarCreateNewUserModal extends FormComponent {
+    constructor() {
+        super(...arguments);
 
         this.state = {
             inputNameValue: '',
@@ -33,13 +33,15 @@ export default class SidebarCreateNewUserModal extends FormComponent {
             inputRepeatPasswordErrorMessage: ''
         };
 
+        this.newUserRedirect = false;
+
         this.handleRegisterForm = this.handleRegisterForm.bind(this);
         this.inputNameChange = this.inputNameChange.bind(this);
         this.inputSurnameChange = this.inputSurnameChange.bind(this);
         this.inputEmailChange = this.inputEmailChange.bind(this);
         this.inputPasswordChange = this.inputPasswordChange.bind(this);
         this.inputRepeatPasswordChange = this.inputRepeatPasswordChange.bind(this);
-        this.onUserChangeAdd = this.onUserChangeAdd.bind(this);
+        this.userAddSuccess = this.userAddSuccess.bind(this);
     }
 
     handleRegisterForm() {
@@ -50,7 +52,8 @@ export default class SidebarCreateNewUserModal extends FormComponent {
             this.state.inputPasswordOk &&
             this.state.inputRepeatPasswordOk
         ) {
-            addUser(this.state.inputNameValue, this.state.inputSurnameValue, this.state.inputEmailValue, this.state.inputPasswordValue);
+            let user = addUser(this.state.inputNameValue, this.state.inputSurnameValue, this.state.inputEmailValue, this.state.inputPasswordValue);
+            this.props.dispatch(user);
         }
         return false;
     }
@@ -105,18 +108,16 @@ export default class SidebarCreateNewUserModal extends FormComponent {
         });
     }
 
-    onUserChangeAdd(user) {
-        this.props.handleCloseModal();
-        this.setState(this.defaultStates);
-        browserHistory.push(`/profile/${user._id}`);
-    }
-
-    componentWillMount() {
-        UsersStore.on('change-add', this.onUserChangeAdd);
-    }
-
-    componentWillUnmount() {
-        UsersStore.removeListener('change-add', this.onUserChangeAdd);
+    userAddSuccess() {
+        if (this.props.user != null && !this.newUserRedirect) {
+            let _id = this.props.user._id;
+            if (_id != null) {
+                this.newUserRedirect = true;
+                this.props.handleCloseModal();
+                this.setState(this.defaultStates);
+                browserHistory.push(`/profile/${_id}`);
+            }
+        }
     }
 
     render() {
@@ -175,8 +176,17 @@ export default class SidebarCreateNewUserModal extends FormComponent {
                                 <span id="inputRepeatPasswordHelpBox"
                                       className="help-block">{(this.state.inputRepeatPasswordError ? this.state.inputRepeatPasswordErrorMessage : '')}</span>
                             </FormGroup>
-                            <Button className="btn-primary"
-                                    onClick={this.handleRegisterForm}>Add</Button>
+                            {
+                                this.props.add_is_fetching
+                                    ? this.bubbling()
+                                    : <Button className="btn-primary"
+                                             onClick={this.handleRegisterForm}>Add</Button>
+                            }
+                            {
+                                /* todo alert... */
+                                this.props.success
+                                    ? this.userAddSuccess() : ''
+                            }
                         </Form>
                     </ModalBody>
                 </Modal>
@@ -184,3 +194,14 @@ export default class SidebarCreateNewUserModal extends FormComponent {
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        success: store.user.success,
+        lastPage: store.user.lastPage,
+        add_is_fetching: store.user.add_is_fetching
+    };
+}
+
+export default connect(mapStateToProps)(SidebarCreateNewUserModal);

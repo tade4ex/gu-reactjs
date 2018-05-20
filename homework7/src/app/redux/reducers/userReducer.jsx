@@ -8,7 +8,7 @@ export function userReducer(state = {error_message: null}, action) {
             break;
         }
         case UserConstants.ADD_USER_FULFILLED: {
-            state = {...state, add_is_fetching: false, user: action.payload.data, success: action.payload.data.success};
+            state = {...state, add_is_fetching: false, user: action.payload.data.ops[0], success: action.payload.data.result.ok};
             break;
         }
         case UserConstants.ADD_USER_REJECTED: {

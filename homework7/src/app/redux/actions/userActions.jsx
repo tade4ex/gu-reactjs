@@ -33,7 +33,12 @@ export function addUser(name, surname, email, password) {
     let url = `/api/user-add`;
     return {
         type: ADD_USER,
-        payload: axios.post(url, {...arguments})
+        payload: axios.post(url, {
+            name,
+            surname,
+            email,
+            password
+        })
     };
 }
 

@@ -24,7 +24,6 @@ class ProfilePage extends MasterComponent {
     }
 
     render() {
-        console.log('profile', this.props);
         return (<div>
             <h1>USER PROFILE</h1>
             {
