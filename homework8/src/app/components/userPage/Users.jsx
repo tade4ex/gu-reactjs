@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 
 import User from "./User";
 import {fetchUsers} from "../../redux/actions/usersActions";
+import {deleteUser} from "../../redux/actions/userActions";
 
 import MasterComponent from "../../MasterComponent";
 
@@ -15,6 +16,13 @@ class Users extends MasterComponent {
         this.page = parseInt(this.props.page);
         this.limitPerPage = 5;
         this.changeProps();
+
+        this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    }
+
+    handleDeleteUser(userId) {
+        let user = deleteUser(userId);
+        this.props.dispatch(user);
     }
 
     changeProps() {
@@ -28,11 +36,14 @@ class Users extends MasterComponent {
             this.page = propsPage;
             this.changeProps();
         }
+        if (nextProps.delete_success === 1) {
+            this.changeProps();
+        }
     }
 
     render() {
         let users = this.props.users.map((user) => {
-            return <User {...user} key={user._id}/>
+            return <User {...user} key={user._id} handleDeleteUser={this.handleDeleteUser}/>
         });
         return (
             <div>
@@ -78,7 +89,8 @@ function mapStateToProps(store) {
     return {
         users: store.users.users,
         lastPage: store.users.lastPage,
-        is_fetching: store.users.is_fetching
+        is_fetching: store.users.is_fetching,
+        delete_success: store.user.delete_success
     };
 }
 

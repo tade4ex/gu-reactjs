@@ -8,9 +8,9 @@ const MongoDB = require("./MongoDB");
 const ApiGet = require('./ApiGet');
 const ApiPost = require('./ApiPost');
 
-const User = require('./modules/User');
-const Post = require('./modules/Post');
-const Comment = require('./modules/Comment');
+const User = require('./models/User');
+const Post = require('./models/Post');
+const Comment = require('./models/Comment');
 
 class Server {
     constructor(config) {

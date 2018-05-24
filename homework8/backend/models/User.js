@@ -24,6 +24,31 @@ class User {
         });
     }
 
+    edit(data, callback) {
+        data = {
+            query: {_id: new ObjectID(data.id)},
+            newValues: {
+                $set: {
+                    email: data.email,
+                    name: data.name,
+                    surname: data.surname,
+                }
+            }
+        };
+        this.db.collectionUsers('update', data, (err, result) => {
+            callback(result);
+        })
+    }
+
+    delete(data, callback) {
+        data = {
+            query: {_id: new ObjectID(data.id)}
+        };
+        this.db.collectionUsers('delete', data, (err, result) => {
+            callback(result);
+        });
+    }
+
     get(userId, callback) {
         this.db.collectionUsers('get', {'_id': new ObjectID(userId)}, (err, result) => {
             callback(result);
@@ -36,8 +61,8 @@ class User {
             if (err) return console.log(err);
             if (this.checkPassword(password, result.password)) {
                 authorization = true;
-                postRes.cookie('email', result.email, { maxAge: 900000, httpOnly: true });
-                postRes.cookie('password', result.password, { maxAge: 900000, httpOnly: true });
+                postRes.cookie('email', result.email, {maxAge: 900000, httpOnly: true});
+                postRes.cookie('password', result.password, {maxAge: 900000, httpOnly: true});
                 return callback(authorization);
             }
             return callback(authorization);

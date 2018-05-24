@@ -12,6 +12,8 @@ class ApiPost {
         this.routes.post('/post-add', this.postPostAdd.bind(this));
 
         this.routes.post('/user-add', this.postUserAdd.bind(this));
+        this.routes.post('/user-edit', this.postUserEdit.bind(this));
+        this.routes.post('/user-delete', this.postUserDelete.bind(this));
         this.routes.post('/users-all', this.postUserAll.bind(this));
 
         this.routes.post('/comments-all', this.postCommentAll.bind(this));
@@ -32,6 +34,18 @@ class ApiPost {
 
     postPostAdd(req, res) {
         this.server.post.add(req.body, (result) => {
+            res.json(result);
+        });
+    }
+
+    postUserEdit(req, res) {
+        this.server.user.edit(req.body, (result) => {
+            res.json(result);
+        });
+    }
+
+    postUserDelete(req, res) {
+        this.server.user.delete(req.body, (result) => {
             res.json(result);
         });
     }

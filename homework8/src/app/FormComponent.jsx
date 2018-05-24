@@ -1,5 +1,5 @@
 import React from 'react';
-import MasterComponent from "../MasterComponent";
+import MasterComponent from "./MasterComponent";
 
 export default class FormComponent extends MasterComponent {
     constructor(props) {

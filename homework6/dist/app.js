@@ -27,7 +27,7 @@
 /******/ 	}
 
 
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the models object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 
 /******/ 	// expose the module cache
@@ -2935,7 +2935,7 @@
 	var eventPluginOrder = null;
 
 	/**
-	 * Injectable mapping from names to event plugin modules.
+	 * Injectable mapping from names to event plugin models.
 	 */
 	var namesToPlugins = {};
 
@@ -3072,7 +3072,7 @@
 	 *
 	 * Plugins can be injected as part of page initialization or on-the-fly.
 	 *
-	 * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+	 * @param {object} injectedNamesToPlugins Map from names to plugin models.
 	 * @internal
 	 * @see {EventPluginHub.injection.injectEventPluginsByName}
 	 */
@@ -3341,7 +3341,7 @@
 	  injectEventPluginOrder: injectEventPluginOrder,
 
 	  /**
-	   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+	   * @param {object} injectedNamesToPlugins Map from names to plugin models.
 	   */
 	  injectEventPluginsByName: injectEventPluginsByName
 	};
@@ -7777,7 +7777,7 @@
 	};
 
 	/**
-	 * Inject modules for resolving DOM hierarchy and plugin ordering.
+	 * Inject models for resolving DOM hierarchy and plugin ordering.
 	 */
 	injection.injectEventPluginOrder(DOMEventPluginOrder);
 	injection$1.injectComponentTree(ReactDOMComponentTree);
@@ -26307,7 +26307,7 @@
 	module.exports = function() {
 		var list = [];
 
-		// return the list of modules as css string
+		// return the list of models as css string
 		list.toString = function toString() {
 			var result = [];
 			for(var i = 0; i < this.length; i++) {
@@ -26321,7 +26321,7 @@
 			return result.join("");
 		};
 
-		// import a list of modules into the list
+		// import a list of models into the list
 		list.i = function(modules, mediaQuery) {
 			if(typeof modules === "string")
 				modules = [[null, modules, ""]];

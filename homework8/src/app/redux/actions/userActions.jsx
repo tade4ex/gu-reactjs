@@ -42,11 +42,16 @@ export function addUser(name, surname, email, password) {
     };
 }
 
-export function updateUser(id, name, surname, email, password) {
-    let url = `/api/user-update`;
+export function editUser(id, name, surname, email) {
+    let url = `/api/user-edit`;
     return {
         type: UPDATE_USER,
-        payload: axios.post(url, {...arguments})
+        payload: axios.post(url, {
+            id,
+            name,
+            surname,
+            email
+        })
     };
 }
 

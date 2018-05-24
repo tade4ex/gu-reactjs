@@ -3,7 +3,7 @@ import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from
 import {browserHistory} from "react-router";
 import {connect} from 'react-redux';
 
-import FormComponent from "../FormComponent";
+import FormComponent from "../../FormComponent";
 import {addUser} from '../../redux/actions/userActions';
 
 class SidebarCreateNewUserModal extends FormComponent {

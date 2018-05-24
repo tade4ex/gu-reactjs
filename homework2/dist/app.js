@@ -27,7 +27,7 @@
 /******/ 	}
 
 
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the models object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 
 /******/ 	// expose the module cache
@@ -2883,7 +2883,7 @@
 	var eventPluginOrder = null;
 
 	/**
-	 * Injectable mapping from names to event plugin modules.
+	 * Injectable mapping from names to event plugin models.
 	 */
 	var namesToPlugins = {};
 
@@ -3020,7 +3020,7 @@
 	 *
 	 * Plugins can be injected as part of page initialization or on-the-fly.
 	 *
-	 * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+	 * @param {object} injectedNamesToPlugins Map from names to plugin models.
 	 * @internal
 	 * @see {EventPluginHub.injection.injectEventPluginsByName}
 	 */
@@ -3289,7 +3289,7 @@
 	  injectEventPluginOrder: injectEventPluginOrder,
 
 	  /**
-	   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+	   * @param {object} injectedNamesToPlugins Map from names to plugin models.
 	   */
 	  injectEventPluginsByName: injectEventPluginsByName
 	};
@@ -7725,7 +7725,7 @@
 	};
 
 	/**
-	 * Inject modules for resolving DOM hierarchy and plugin ordering.
+	 * Inject models for resolving DOM hierarchy and plugin ordering.
 	 */
 	injection.injectEventPluginOrder(DOMEventPluginOrder);
 	injection$1.injectComponentTree(ReactDOMComponentTree);

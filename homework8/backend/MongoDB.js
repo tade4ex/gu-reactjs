@@ -26,7 +26,10 @@ class MongoDB {
 
     collectionGet(collectionName, find, callback) {
         this.collection(collectionName).findOne(find, callback);
+    }
 
+    collectionDelete(collectionName, data, callback) {
+        this.collection(collectionName).deleteOne(data.query, callback);
     }
 
     collectionUpdate(collectionName, data, callback) {
@@ -54,6 +57,12 @@ class MongoDB {
                 break;
             case 'save':
                 this.collectionSave(collectionName, data, callback);
+                break;
+            case 'update':
+                this.collectionUpdate(collectionName, data, callback);
+                break;
+            case 'delete':
+                this.collectionDelete(collectionName, data, callback);
                 break;
         }
     }

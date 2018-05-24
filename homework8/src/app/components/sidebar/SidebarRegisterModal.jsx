@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-import FormComponent from "../FormComponent";
+import FormComponent from "../../FormComponent";
 
 export default class SidebarCreateNewUserModal extends FormComponent {
     constructor(props) {

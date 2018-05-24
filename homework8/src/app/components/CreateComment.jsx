@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Form, FormGroup, Button} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-import FormComponent from "./FormComponent";
+import FormComponent from "../FormComponent";
 import {addComment, fetchComments} from "../flux/actions/commentsAction";
 import AuthUserStore from "../flux/store/AuthUserStore";
 import {fetchAuth} from "../flux/actions/authActions";

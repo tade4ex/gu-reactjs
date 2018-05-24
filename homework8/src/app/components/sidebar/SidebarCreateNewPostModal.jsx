@@ -1,11 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import {Form, FormGroup, Button, Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
 import PostsStore from '../../flux/store/PostsStore';
 import {addPost} from '../../flux/actions/postsActions';
-import FormComponent from "../FormComponent";
+import FormComponent from "../../FormComponent";
 
 export default class SidebarCreateNewPostModal extends FormComponent {
     constructor(props) {

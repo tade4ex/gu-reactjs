@@ -12,6 +12,7 @@ import AboutPage from "./app/pages/AboutPage";
 import ContactsPage from "./app/pages/ContactsPage";
 import UsersPage from "./app/pages/UsersPage";
 import ProfilePage from "./app/pages/ProfilePage";
+import ProfileEditPage from "./app/pages/ProfileEditPage";
 
 const app = document.getElementById('app');
 
@@ -29,6 +30,7 @@ ReactDOM.render(
                 </Route>
                 <Route path="post/:id" component={PostPage}/>
                 <Route path="profile/:id" component={ProfilePage}/>
+                <Route path="profile/edit/:id" component={ProfileEditPage}/>
                 <Route path="users" component={UsersPage}>
                     <Route path=":page" component={UsersPage}/>
                 </Route>

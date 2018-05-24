@@ -90,6 +90,10 @@
 
 	var _ProfilePage2 = _interopRequireDefault(_ProfilePage);
 
+	var _ProfileEditPage = __webpack_require__(482);
+
+	var _ProfileEditPage2 = _interopRequireDefault(_ProfileEditPage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = document.getElementById('app');
@@ -115,6 +119,7 @@
 	            ),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'post/:id', component: _PostPage2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'profile/:id', component: _ProfilePage2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'profile/edit/:id', component: _ProfileEditPage2.default }),
 	            _react2.default.createElement(
 	                _reactRouter.Route,
 	                { path: 'users', component: _UsersPage2.default },
@@ -29538,9 +29543,17 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function userReducer() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { error_message: null };
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	        error_message: null,
+	        edit_success: false,
+	        success: false,
+	        user: null
+	    };
 	    var action = arguments[1];
 
+	    state.success = false;
+	    state.edit_success = false;
+	    state.delete_success = false;
 	    switch (action.type) {
 	        /* add user */
 	        case UserConstants.ADD_USER_PENDING:
@@ -29558,6 +29571,38 @@
 	                state = _extends({}, state, { add_is_fetching: false, error_message: action.payload.message, success: false });
 	                break;
 	            }
+	        /* edit user */
+	        case UserConstants.UPDATE_USER_PENDING:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: true, user: null, edit_success: false });
+	                break;
+	            }
+	        case UserConstants.UPDATE_USER_FULFILLED:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: false, user: null, edit_success: action.payload.data.ok });
+	                break;
+	            }
+	        case UserConstants.UPDATE_USER_REJECTED:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: false, error_message: action.payload.message, edit_success: false });
+	                break;
+	            }
+	        /* delete user */
+	        case UserConstants.DELETE_USER_PENDING:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: true, delete_success: false });
+	                break;
+	            }
+	        case UserConstants.DELETE_USER_FULFILLED:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: false, delete_success: action.payload.data.ok });
+	                break;
+	            }
+	        case UserConstants.DELETE_USER_REJECTED:
+	            {
+	                state = _extends({}, state, { edit_is_fetching: false, error_message: action.payload.message, delete_success: false });
+	                break;
+	            }
 	        /* get user */
 	        case UserConstants.GET_USER_PENDING:
 	            {
@@ -29566,7 +29611,7 @@
 	            }
 	        case UserConstants.GET_USER_FULFILLED:
 	            {
-	                state = _extends({}, state, { get_is_fetching: false, user: action.payload.data });
+	                state = _extends({}, state, { get_is_fetching: false, user: action.payload.data, edit_success: false });
 	                break;
 	            }
 	        case UserConstants.GET_USER_REJECTED:
@@ -53883,14 +53928,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	exports.authUser = authUser;
 	exports.isAuthUser = isAuthUser;
 	exports.getUser = getUser;
 	exports.addUser = addUser;
-	exports.updateUser = updateUser;
+	exports.editUser = editUser;
 	exports.deleteUser = deleteUser;
 	exports.logoutUser = logoutUser;
 
@@ -53942,11 +53984,16 @@
 	    };
 	}
 
-	function updateUser(id, name, surname, email, password) {
-	    var url = '/api/user-update';
+	function editUser(id, name, surname, email) {
+	    var url = '/api/user-edit';
 	    return {
 	        type: _userConstants.UPDATE_USER,
-	        payload: _axios2.default.post(url, _extends({}, arguments))
+	        payload: _axios2.default.post(url, {
+	            id: id,
+	            name: name,
+	            surname: surname,
+	            email: email
+	        })
 	    };
 	}
 
@@ -55296,10 +55343,6 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _axios = __webpack_require__(416);
-
-	var _axios2 = _interopRequireDefault(_axios);
 
 	var _reactBootstrap = __webpack_require__(142);
 
@@ -57496,6 +57539,8 @@
 
 	var _usersActions = __webpack_require__(480);
 
+	var _userActions = __webpack_require__(443);
+
 	var _MasterComponent2 = __webpack_require__(413);
 
 	var _MasterComponent3 = _interopRequireDefault(_MasterComponent2);
@@ -57519,10 +57564,18 @@
 	        _this.page = parseInt(_this.props.page);
 	        _this.limitPerPage = 5;
 	        _this.changeProps();
+
+	        _this.handleDeleteUser = _this.handleDeleteUser.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Users, [{
+	        key: 'handleDeleteUser',
+	        value: function handleDeleteUser(userId) {
+	            var user = (0, _userActions.deleteUser)(userId);
+	            this.props.dispatch(user);
+	        }
+	    }, {
 	        key: 'changeProps',
 	        value: function changeProps() {
 	            var users = (0, _usersActions.fetchUsers)(this.page, this.limitPerPage);
@@ -57536,12 +57589,17 @@
 	                this.page = propsPage;
 	                this.changeProps();
 	            }
+	            if (nextProps.delete_success === 1) {
+	                this.changeProps();
+	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            var users = this.props.users.map(function (user) {
-	                return _react2.default.createElement(_User2.default, _extends({}, user, { key: user._id }));
+	                return _react2.default.createElement(_User2.default, _extends({}, user, { key: user._id, handleDeleteUser: _this2.handleDeleteUser }));
 	            });
 	            return _react2.default.createElement(
 	                'div',
@@ -57637,7 +57695,8 @@
 	    return {
 	        users: store.users.users,
 	        lastPage: store.users.lastPage,
-	        is_fetching: store.users.is_fetching
+	        is_fetching: store.users.is_fetching,
+	        delete_success: store.user.delete_success
 	    };
 	}
 
@@ -57676,10 +57735,18 @@
 	    function User(props) {
 	        _classCallCheck(this, User);
 
-	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+
+	        _this.handleDeleteUser = _this.handleDeleteUser.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(User, [{
+	        key: 'handleDeleteUser',
+	        value: function handleDeleteUser() {
+	            this.props.handleDeleteUser(this.props._id);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -57707,11 +57774,21 @@
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    null,
+	                    { className: 'btn-group', role: 'group' },
 	                    _react2.default.createElement(
 	                        _reactRouter.Link,
-	                        { to: '/profile/' + this.props._id },
-	                        'view profile'
+	                        { className: 'btn btn-default', to: '/profile/' + this.props._id },
+	                        'view'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { className: 'btn btn-primary', to: '/profile/edit/' + this.props._id },
+	                        'edit'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { className: 'btn btn-danger', onClick: this.handleDeleteUser },
+	                        'delete'
 	                    )
 	                )
 	            );
@@ -57768,6 +57845,8 @@
 
 	var _reactRedux = __webpack_require__(85);
 
+	var _reactRouter = __webpack_require__(25);
+
 	var _MasterComponent2 = __webpack_require__(413);
 
 	var _MasterComponent3 = _interopRequireDefault(_MasterComponent2);
@@ -57818,7 +57897,7 @@
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    'USER PROFILE'
+	                    'USER'
 	                ),
 	                this.props.get_is_fetching ? this.bubbling() : this.props.user == null ? this.alert('danger', 'user not find') : _react2.default.createElement(
 	                    'div',
@@ -57855,6 +57934,26 @@
 	                        ),
 	                        ' ',
 	                        this.props.user.email
+	                    ),
+	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { className: 'btn btn-default', to: '/profile/edit/' + this.props.user._id },
+	                            'Edit'
+	                        )
+	                    ),
+	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { onClick: _reactRouter.browserHistory.goBack },
+	                            'back to users'
+	                        )
 	                    )
 	                )
 	            );
@@ -57872,6 +57971,253 @@
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ProfilePage);
+
+/***/ }),
+/* 482 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(85);
+
+	var _reactRouter = __webpack_require__(25);
+
+	var _reactBootstrap = __webpack_require__(142);
+
+	var _FormComponent2 = __webpack_require__(442);
+
+	var _FormComponent3 = _interopRequireDefault(_FormComponent2);
+
+	var _userActions = __webpack_require__(443);
+
+	var _userActions2 = __webpack_require__(443);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ProfileEditPage = function (_FormComponent) {
+	    _inherits(ProfileEditPage, _FormComponent);
+
+	    function ProfileEditPage() {
+	        _classCallCheck(this, ProfileEditPage);
+
+	        var _this = _possibleConstructorReturn(this, (ProfileEditPage.__proto__ || Object.getPrototypeOf(ProfileEditPage)).apply(this, arguments));
+
+	        _this.userId = _this.props.params.id;
+
+	        _this.state = {
+	            inputNameValue: '',
+	            inputNameOk: true,
+	            inputNameError: false,
+	            inputNameErrorMessage: '',
+	            inputSurnameValue: '',
+	            inputSurnameOk: true,
+	            inputSurnameError: false,
+	            inputSurnameErrorMessage: '',
+	            inputEmailValue: '',
+	            inputEmailOk: true,
+	            inputEmailError: false,
+	            inputEmailErrorMessage: ''
+	        };
+
+	        _this.changeProps();
+
+	        _this.handleSave = _this.handleSave.bind(_this);
+	        _this.inputNameChange = _this.inputNameChange.bind(_this);
+	        _this.inputSurnameChange = _this.inputSurnameChange.bind(_this);
+	        _this.inputEmailChange = _this.inputEmailChange.bind(_this);
+	        _this.userEditSuccess = _this.userEditSuccess.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(ProfileEditPage, [{
+	        key: 'handleSave',
+	        value: function handleSave() {
+	            if (this.state.inputNameOk && this.state.inputSurnameOk && this.state.inputEmailOk) {
+	                var user = (0, _userActions2.editUser)(this.userId, this.state.inputNameValue, this.state.inputSurnameValue, this.state.inputEmailValue);
+	                this.props.dispatch(user);
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: 'inputNameChange',
+	        value: function inputNameChange(e) {
+	            this.checkInput(e, 'inputName', {
+	                len: {
+	                    len: 3,
+	                    errorMessage: 'Name must min 3 symbols!'
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'inputSurnameChange',
+	        value: function inputSurnameChange(e) {
+	            this.checkInput(e, 'inputSurname', {
+	                len: {
+	                    len: 3,
+	                    errorMessage: 'Name must min 3 symbols!'
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'inputEmailChange',
+	        value: function inputEmailChange(e) {
+	            this.checkInput(e, 'inputEmail', {
+	                regexp: {
+	                    regexp: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+	                    errorMessage: 'Email incorrect, example test@test.com!'
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'userEditSuccess',
+	        value: function userEditSuccess() {
+	            _reactRouter.browserHistory.push('/profile/' + this.userId);
+	        }
+	    }, {
+	        key: 'changeProps',
+	        value: function changeProps() {
+	            var user = (0, _userActions.getUser)(this.userId);
+	            this.props.dispatch(user);
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (nextProps.params.id !== this.userId) {
+	                this.userId = nextProps.params.id;
+	                this.changeProps();
+	            }
+	            if (nextProps.user != null) {
+	                this.setState({
+	                    inputEmailValue: nextProps.user.email,
+	                    inputNameValue: nextProps.user.name,
+	                    inputSurnameValue: nextProps.user.surname
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'USER EDIT'
+	                ),
+
+	                /* todo alert... */
+	                this.props.edit_success ? this.userEditSuccess() : '',
+	                this.props.get_is_fetching ? this.bubbling() : this.props.user == null ? this.alert('danger', 'user not find') : _react2.default.createElement(
+	                    _reactBootstrap.Form,
+	                    { type: 'post' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.FormGroup,
+	                        { className: this.state.inputNameError ? 'has-error' : '' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'inputName' },
+	                            'Name:'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'inputName',
+	                            placeholder: 'Name', 'aria-describedby': 'inputNameHelpBox',
+	                            value: this.state.inputNameValue,
+	                            onBlur: this.inputNameChange, onChange: this.inputNameChange }),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { id: 'inputNameHelpBox',
+	                                className: 'help-block' },
+	                            this.state.inputNameError ? this.state.inputNameErrorMessage : ''
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.FormGroup,
+	                        { className: this.state.inputSurnameError ? 'has-error' : '' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'inputSurname' },
+	                            'Surname:'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'inputSurname',
+	                            placeholder: 'Surname', 'aria-describedby': 'inputSurnameHelpBox',
+	                            value: this.state.inputSurnameValue,
+	                            onBlur: this.inputSurnameChange,
+	                            onChange: this.inputSurnameChange }),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { id: 'inputSurnameHelpBox',
+	                                className: 'help-block' },
+	                            this.state.inputSurnameError ? this.state.inputSurnameErrorMessage : ''
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.FormGroup,
+	                        { className: this.state.inputEmailError ? 'has-error' : '' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'inputEmail' },
+	                            'Email address:'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'email', className: 'form-control', id: 'inputEmail',
+	                            placeholder: 'Email address', 'aria-describedby': 'inputEmailHelpBox',
+	                            value: this.state.inputEmailValue,
+	                            onBlur: this.inputEmailChange, onChange: this.inputEmailChange }),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { id: 'inputEmailHelpBox',
+	                                className: 'help-block' },
+	                            this.state.inputEmailError ? this.state.inputEmailErrorMessage : ''
+	                        )
+	                    ),
+	                    this.props.edit_is_fetching ? this.bubbling() : _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Button,
+	                            { className: 'btn-success', onClick: this.handleSave },
+	                            'Save'
+	                        ),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Button,
+	                            { className: 'btn-danger', onClick: _reactRouter.browserHistory.goBack },
+	                            'Cancel'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ProfileEditPage;
+	}(_FormComponent3.default);
+
+	function mapStateToProps(store) {
+	    return {
+	        user: store.user.user,
+	        edit_success: store.user.edit_success,
+	        get_is_fetching: store.user.get_is_fetching,
+	        edit_is_fetching: store.edit_is_fetching
+	    };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ProfileEditPage);
 
 /***/ })
 /******/ ]);
